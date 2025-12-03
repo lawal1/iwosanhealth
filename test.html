@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iwosan.Africa - Premium Healthcare in Nigeria</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #b70303;
+            --primary-dark: #8a0202;
+            --primary-light: #d84c4c;
+            --text-dark: #333;
+            --text-light: #666;
+            --text-white: #fff;
+            --bg-light: #f8f8f8;
+            --bg-white: #fff;
+            --border-color: #eaeaea;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .logo span {
+            color: var(--text-dark);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+        }
+        
+        nav ul li a {
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+        
+        .mobile-menu {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            color: white;
+            overflow: hidden;
+        }
+        
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+        
+        .hero-content {
+            max-width: 650px;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        
+        .hero-btns {
+            display: flex;
+            gap: 15px;
+        }
+        
+        /* Sections */
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            font-size: 18px;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Sub-hero */
+        .sub-hero {
+            background-color: var(--bg-light);
+        }
+        
+        .sub-hero-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .sub-hero h2 {
+            font-size: 32px;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+        }
+        
+        .sub-hero p {
+            font-size: 18px;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+        
+        /* How It Works */
+        .how-it-works {
+            background-color: var(--bg-white);
+        }
+        
+        .steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 30px;
+        }
+        
+        .step {
+            flex: 1;
+            min-width: 250px;
+            padding: 30px;
+            background-color: var(--bg-light);
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .step:hover {
+            transform: translateY(-10px);
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            line-height: 40px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        .step h3 {
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        /* Why Iwosan */
+        .why-iwosan {
+            background-color: var(--bg-light);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .feature i {
+            font-size: 36px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .feature h3 {
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        /* Services */
+        .services {
+            background-color: var(--bg-white);
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .service {
+            padding: 20px;
+            border-left: 3px solid var(--primary-color);
+            background-color: var(--bg-light);
+        }
+        
+        .service h3 {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        /* Trust & Safety */
+        .trust-safety {
+            background-color: var(--bg-light);
+        }
+        
+        .trust-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .trust-content p {
+            font-size: 18px;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+        
+        /* Partners */
+        .partners {
+            background-color: var(--bg-white);
+        }
+        
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .partner {
+            text-align: center;
+            padding: 20px;
+            background-color: var(--bg-light);
+            border-radius: 8px;
+        }
+        
+        /* Stories */
+        .stories {
+            background-color: var(--bg-light);
+        }
+        
+        .story-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .story-content p {
+            font-size: 18px;
+            line-height: 1.7;
+        }
+        
+        /* CTA */
+        .cta {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 100px 0;
+        }
+        
+        .cta h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        .cta p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-btns {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .cta .btn {
+            background-color: white;
+            color: var(--primary-color);
+        }
+        
+        .cta .btn:hover {
+            background-color: var(--bg-light);
+        }
+        
+        .cta .btn-outline {
+            background-color: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+        
+        .cta .btn-outline:hover {
+            background-color: white;
+            color: var(--primary-color);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #222;
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo span {
+            color: var(--primary-light);
+        }
+        
+        .footer-about {
+            flex: 1;
+            min-width: 300px;
+            margin-right: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        
+        .footer-column {
+            min-width: 150px;
+        }
+        
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--primary-light);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a:hover {
+            color: var(--primary-light);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #444;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 40px;
+            }
+            
+            .section-title h2 {
+                font-size: 32px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: block;
+            }
+            
+            nav {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                transform: translateY(-150%);
+                transition: transform 0.3s ease;
+            }
+            
+            nav.active {
+                transform: translateY(0);
+            }
+            
+            nav ul {
+                flex-direction: column;
+                padding: 20px;
+            }
+            
+            nav ul li {
+                margin: 10px 0;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero-btns {
+                flex-direction: column;
+            }
+            
+            .cta-btns {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .footer-links {
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .section-title h2 {
+                font-size: 28px;
+            }
+            
+            .step {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">IWOSAN.<span>AFRICA</span></a>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#why-iwosan">Why Us</a></li>
+                    <li><a href="#partners">Partners</a></li>
+                    <li><a href="#stories">Stories</a></li>
+                    <li><a href="#contact" class="btn">Book Consultation</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <video autoplay muted loop class="hero-video">
+            <source src="https://player.vimeo.com/external/469588400.sd.mp4?s=5e4e1f2b4f5f6b0c1e4e4e4e4e4e4e4e&profile_id=164" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1>Access World-Class Healthcare in Nigeria — From Anywhere in the World</h1>
+                <p>Get high-quality medical procedures from Nigeria's best doctors at up to 80% less than what you'd pay abroad. Trusted. Affordable. Seamless.</p>
+                <div class="hero-btns">
+                    <a href="#" class="btn">Start Your Medical Journey</a>
+                    <a href="#" class="btn btn-outline">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sub-hero / Value Proposition -->
+    <section class="sub-hero">
+        <div class="container">
+            <div class="sub-hero-content">
+                <h2>Bringing the diaspora closer to exceptional care</h2>
+                <p>Iwosan.Africa connects people in the diaspora to over 2,000+ vetted medical professionals across Nigeria, delivering premium-quality treatment with full end-to-end support—so you can focus on healing, not the hassles.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <h2>Healthcare, simplified. From consultation to recovery.</h2>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Choose Your Procedure</h3>
+                    <p>Browse IVF, surgical procedures, dental care, diagnostics, cosmetic surgery, orthopedic care, and more.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Match With Top Nigerian Specialists</h3>
+                    <p>All doctors and hospitals on Iwosan.Africa are verified, accredited, and quality-assured.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Get Transparent Pricing</h3>
+                    <p>Know exactly what you will pay—often saving $5,000–$10,000 compared to US/UK prices.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Enjoy Full Service Support</h3>
+                    <p>We coordinate your immigration documents, travel plans, accommodation, hospital logistics, and after-care.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <h3>Receive Premium Care</h3>
+                    <p>Arrive in Nigeria confident, prepared, and supported—every step of the way.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Iwosan.Africa -->
+    <section class="why-iwosan" id="why-iwosan">
+        <div class="container">
+            <div class="section-title">
+                <h2>Premium healthcare doesn't have to be expensive.</h2>
+            </div>
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-percentage"></i>
+                    <h3>Save up to 80%</h3>
+                    <p>Nigeria offers globally recognized medical expertise at a fraction of overseas prices.</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-user-md"></i>
+                    <h3>2,000+ Medical Professionals</h3>
+                    <p>You gain access to a network of top surgeons, fertility experts, cardiologists, dentists, and specialists.</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-handshake"></i>
+                    <h3>Trusted Partnerships</h3>
+                    <p>We collaborate with the best hospitals, immigration services, travel agents, accommodations, and welfare teams to guarantee safety and comfort.</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-globe-africa"></i>
+                    <h3>Diaspora-Focused</h3>
+                    <p>Designed specifically for Africans abroad who want quality care without the financial burden.</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-concierge-bell"></i>
+                    <h3>End-to-End Concierge Support</h3>
+                    <p>From airport pickup to hospital check-ins, we handle everything.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Medical Services -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Top procedures that save thousands</h2>
+            </div>
+            <div class="services-grid">
+                <div class="service">
+                    <h3>IVF & Fertility Care</h3>
+                    <p>Save over $10,000 per cycle</p>
+                </div>
+                <div class="service">
+                    <h3>Orthopedic Surgeries</h3>
+                    <p>Hip/Knee replacements</p>
+                </div>
+                <div class="service">
+                    <h3>Cosmetic & Plastic Surgery</h3>
+                </div>
+                <div class="service">
+                    <h3>Dental Implants & Cosmetic Dentistry</h3>
+                </div>
+                <div class="service">
+                    <h3>General Surgeries</h3>
+                    <p>Hernia, Appendectomy</p>
+                </div>
+                <div class="service">
+                    <h3>Cardiology Diagnostics & Treatment</h3>
+                </div>
+                <div class="service">
+                    <h3>Ophthalmology</h3>
+                    <p>Cataract, LASIK</p>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 30px; color: var(--text-light);">More specialists added every week.</p>
+        </div>
+    </section>
+
+    <!-- Trust & Safety -->
+    <section class="trust-safety">
+        <div class="container">
+            <div class="section-title">
+                <h2>Your safety is our priority</h2>
+            </div>
+            <div class="trust-content">
+                <p>We pre-screen and verify every doctor and hospital using global health quality benchmarks. Our team helps you navigate immigration, insurance, security, and travel—so your experience is smooth and stress-free.</p>
+                <a href="#" class="btn">Learn About Our Safety Standards</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners -->
+    <section class="partners" id="partners">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Growing Network of Premium Partners</h2>
+            </div>
+            <div class="partners-grid">
+                <div class="partner">
+                    <i class="fas fa-hospital fa-3x"></i>
+                    <h3>Top-tier hospitals and specialist clinics</h3>
+                </div>
+                <div class="partner">
+                    <i class="fas fa-passport fa-3x"></i>
+                    <h3>Immigration & medical visa partners</h3>
+                </div>
+                <div class="partner">
+                    <i class="fas fa-plane fa-3x"></i>
+                    <h3>Travel agencies & flight partners</h3>
+                </div>
+                <div class="partner">
+                    <i class="fas fa-suitcase-rolling fa-3x"></i>
+                    <h3>Logistics & airport support teams</h3>
+                </div>
+                <div class="partner">
+                    <i class="fas fa-home fa-3x"></i>
+                    <h3>Comfortable serviced apartments</h3>
+                </div>
+                <div class="partner">
+                    <i class="fas fa-hands-helping fa-3x"></i>
+                    <h3>Social welfare & post-care providers</h3>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 30px; color: var(--text-light); max-width: 800px; margin-left: auto; margin-right: auto;">Together, we deliver a complete medical-tourism experience built for peace of mind.</p>
+        </div>
+    </section>
+
+    <!-- Stories & Impact -->
+    <section class="stories" id="stories">
+        <div class="container">
+            <div class="section-title">
+                <h2>Transforming healthcare access for the diaspora</h2>
+            </div>
+            <div class="story-content">
+                <p>People around the world are choosing Nigeria for safe, cost-effective, and high-quality medical procedures—and Iwosan.Africa is making it possible.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta" id="contact">
+        <div class="container">
+            <h2>Start your medical journey today</h2>
+            <p>Whether you need a consultation, price comparison, or full-service medical itinerary—we're here to help.</p>
+            <div class="cta-btns">
+                <a href="#" class="btn">Book a Free Consultation</a>
+                <a href="#" class="btn btn-outline">Explore Medical Procedures</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">IWOSAN.<span>AFRICA</span></div>
+                    <p>Iwosan.Africa — Bringing global healthcare access home. Affordable. Trusted. Seamless.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Services</h3>
+                        <ul>
+                            <li><a href="#">IVF & Fertility</a></li>
+                            <li><a href="#">Orthopedic Surgery</a></li>
+                            <li><a href="#">Cosmetic Surgery</a></li>
+                            <li><a href="#">Dental Care</a></li>
+                            <li><a href="#">Cardiology</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Company</h3>
+                        <ul>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">How It Works</a></li>
+                            <li><a href="#">Our Partners</a></li>
+                            <li><a href="#">Testimonials</a></li>
+                            <li><a href="#">Blog</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Support</h3>
+                        <ul>
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">FAQs</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                            <li><a href="#">Safety Standards</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Iwosan.Africa. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            document.querySelector('nav').classList.toggle('active');
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.backgroundColor = 'rgba(255, 255, 255, 0.98)';
+                header.style.padding = '10px 0';
+            } else {
+                header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+                header.style.padding = '20px 0';
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    document.querySelector('nav').classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

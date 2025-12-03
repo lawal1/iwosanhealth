@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Iwosan.Africa</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f8f9fa;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: white;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #b70303;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.5rem 1.25rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background: #b70303;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #940202;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #b70303;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .filters {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .filters-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-group label {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .filter-group input,
+        .filter-group select {
+            padding: 0.625rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        .table-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #b70303;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #f8f9fa;
+        }
+
+        th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 1rem;
+            border-top: 1px solid #e5e7eb;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        tbody tr {
+            transition: background 0.2s;
+        }
+
+        tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .badge-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .badge-approved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge-rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .actions-cell {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-small {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.85rem;
+        }
+
+        .btn-approve {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-approve:hover {
+            background: #218838;
+        }
+
+        .btn-reject {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-reject:hover {
+            background: #c82333;
+        }
+
+        .btn-view {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-view:hover {
+            background: #0056b3;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            max-width: 700px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            color: #b70303;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .detail-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-label {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
+
+        .detail-value {
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .modal-footer {
+            padding: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .dashboard-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .table-container {
+                overflow-x: auto;
+            }
+
+            table {
+                min-width: 800px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">Iwosan.Africa Admin</div>
+            <div class="header-actions">
+                <button class="btn btn-secondary" onclick="exportData()">Export CSV</button>
+                <button class="btn btn-primary" onclick="refreshData()">Refresh</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="dashboard-stats">
+            <div class="stat-card">
+                <div class="stat-value" id="totalCount">0</div>
+                <div class="stat-label">Total Registrations</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="pendingCount">0</div>
+                <div class="stat-label">Pending Review</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="approvedCount">0</div>
+                <div class="stat-label">Approved</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="specialtyCount">0</div>
+                <div class="stat-label">Specialties</div>
+            </div>
+        </div>
+
+        <div class="filters">
+            <div class="filters-row">
+                <div class="filter-group">
+                    <label>Search</label>
+                    <input type="text" id="searchInput" placeholder="Search by name or email...">
+                </div>
+                <div class="filter-group">
+                    <label>Status</label>
+                    <select id="statusFilter">
+                        <option value="">All Statuses</option>
+                        <option value="pending">Pending</option>
+                        <option value="approved">Approved</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Specialty</label>
+                    <select id="specialtyFilter">
+                        <option value="">All Specialties</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>State</label>
+                    <select id="stateFilter">
+                        <option value="">All States</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-header">
+                <div class="table-title">Medical Professionals</div>
+            </div>
+            
+            <div id="loadingState" class="loading">
+                <div class="spinner"></div>
+                <p>Loading data...</p>
+            </div>
+
+            <div id="tableContent" style="display: none;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Specialty</th>
+                            <th>Experience</th>
+                            <th>State</th>
+                            <th>Status</th>
+                            <th>Submitted</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dataTableBody">
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="noDataState" class="no-data" style="display: none;">
+                <p>No registrations found.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for viewing details -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Professional Details</div>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, collection, getDocs, doc, updateDoc, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        // REPLACE WITH YOUR FIREBASE CONFIG
+        const firebaseConfig = {
+               apiKey: "AIzaSyA3fMQiCZWFpPZJ1JrObgdygtvAC23Hfwo",
+  authDomain: "timirg-copilot.firebaseapp.com",
+  databaseURL: "https://timirg-copilot-default-rtdb.firebaseio.com",
+  projectId: "timirg-copilot",
+  storageBucket: "timirg-copilot.appspot.com",
+  messagingSenderId: "491904583147",
+  appId: "1:491904583147:web:7ad8a54b7341b1abbf05ae",
+  measurementId: "G-GNZKB9SKDE"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let allData = [];
+        let filteredData = [];
+
+        // Load data from Firebase
+        async function loadData() {
+            try {
+                const q = query(collection(db, 'medicalProfessionals'), orderBy('submittedAt', 'desc'));
+                const querySnapshot = await getDocs(q);
+                
+                allData = [];
+                querySnapshot.forEach((doc) => {
+                    allData.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+                });
+
+                filteredData = [...allData];
+                updateStats();
+                populateFilters();
+                renderTable();
+                
+                document.getElementById('loadingState').style.display = 'none';
+                document.getElementById('tableContent').style.display = allData.length > 0 ? 'block' : 'none';
+                document.getElementById('noDataState').style.display = allData.length === 0 ? 'block' : 'none';
+            } catch (error) {
+                console.error('Error loading data:', error);
+                document.getElementById('loadingState').innerHTML = '<p>Error loading data. Please check your Firebase configuration.</p>';
+            }
+        }
+
+        // Update statistics
+        function updateStats() {
+            const totalCount = allData.length;
+            const pendingCount = allData.filter(d => d.status === 'pending').length;
+            const approvedCount = allData.filter(d => d.status === 'approved').length;
+            const specialties = new Set(allData.map(d => d.specialty)).size;
+
+            document.getElementById('totalCount').textContent = totalCount;
+            document.getElementById('pendingCount').textContent = pendingCount;
+            document.getElementById('approvedCount').textContent = approvedCount;
+            document.getElementById('specialtyCount').textContent = specialties;
+        }
+
+        // Populate filter dropdowns
+        function populateFilters() {
+            const specialties = [...new Set(allData.map(d => d.specialty))].sort();
+            const states = [...new Set(allData.map(d => d.workState))].sort();
+
+            const specialtyFilter = document.getElementById('specialtyFilter');
+            specialtyFilter.innerHTML = '<option value="">All Specialties</option>';
+            specialties.forEach(specialty => {
+                specialtyFilter.innerHTML += `<option value="${specialty}">${specialty}</option>`;
+            });
+
+            const stateFilter = document.getElementById('stateFilter');
+            stateFilter.innerHTML = '<option value="">All States</option>';
+            states.forEach(state => {
+                stateFilter.innerHTML += `<option value="${state}">${state}</option>`;
+            });
+        }
+
+        // Render table
+        function renderTable() {
+            const tbody = document.getElementById('dataTableBody');
+            tbody.innerHTML = '';
+
+            if (filteredData.length === 0) {
+                document.getElementById('tableContent').style.display = 'none';
+                document.getElementById('noDataState').style.display = 'block';
+                return;
+            }
+
+            document.getElementById('tableContent').style.display = 'block';
+            document.getElementById('noDataState').style.display = 'none';
+
+            filteredData.forEach(professional => {
+                const row = document.createElement('tr');
+                
+                const submittedDate = professional.submittedAt ? 
+                    new Date(professional.submittedAt.toDate()).toLocaleDateString() : 
+                    'N/A';
+
+                const statusBadgeClass = 
+                    professional.status === 'approved' ? 'badge-approved' :
+                    professional.status === 'rejected' ? 'badge-rejected' :
+                    'badge-pending';
+
+                row.innerHTML = `
+                    <td>${professional.fullName || 'N/A'}</td>
+                    <td>${professional.email || 'N/A'}</td>
+                    <td>${professional.specialty || 'N/A'}</td>
+                    <td>${professional.yearsExperience || 0} years</td>
+                    <td>${professional.workState || 'N/A'}</td>
+                    <td><span class="badge ${statusBadgeClass}">${professional.status || 'pending'}</span></td>
+                    <td>${submittedDate}</td>
+                    <td>
+                        <div class="actions-cell">
+                            <button class="btn btn-small btn-view" onclick="window.viewDetails('${professional.id}')">View</button>
+                            ${professional.status === 'pending' ? `
+                                <button class="btn btn-small btn-approve" onclick="window.updateStatus('${professional.id}', 'approved')">Approve</button>
+                                <button class="btn btn-small btn-reject" onclick="window.updateStatus('${professional.id}', 'rejected')">Reject</button>
+                            ` : ''}
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Apply filters
+        function applyFilters() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const statusFilter = document.getElementById('statusFilter').value;
+            const specialtyFilter = document.getElementById('specialtyFilter').value;
+            const stateFilter = document.getElementById('stateFilter').value;
+
+            filteredData = allData.filter(professional => {
+                const matchesSearch = 
+                    professional.fullName?.toLowerCase().includes(searchTerm) ||
+                    professional.email?.toLowerCase().includes(searchTerm);
+                
+                const matchesStatus = !statusFilter || professional.status === statusFilter;
+                const matchesSpecialty = !specialtyFilter || professional.specialty === specialtyFilter;
+                const matchesState = !stateFilter || professional.workState === stateFilter;
+
+                return matchesSearch && matchesStatus && matchesSpecialty && matchesState;
+            });
+
+            renderTable();
+        }
+
+        // View details
+        window.viewDetails = function(id) {
+            const professional = allData.find(p => p.id === id);
+            if (!professional) return;
+
+            const submittedDate = professional.submittedAt ? 
+                new Date(professional.submittedAt.toDate()).toLocaleString() : 
+                'N/A';
+
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = `
+                <div class="detail-group">
+                    <div class="detail-label">Full Name</div>
+                    <div class="detail-value">${professional.fullName || 'N/A'}</div>
+                </div>
+                <div class="detail-group">
+                    <div class="detail-label">Email</div>
+                    <div class="detail-value">${professional.email || 'N/A'}</div>
+                </div>
+                <div class="detail-group">
+                    <div class="detail-label">Phone Number</div>
+                    <div class="detail-value">${professional.phone || 'N/A'}</div>
+                </div>
+                <div class="detail-group">
+                    <div class="detail-label">University (Year of Graduation)</div>
+                    <div class="detail-value">${professional.university || 'N/A'}</div>
+                </div>
+                <div class="detail-group">
+                    <div class="detail-label">Current Practicing License</div>
+                    <div class="detail-value">${professional.license === 'yes' ? 'Yes' : 'No'}</div>
+                </div>
+                <div class="detail-group">
+                    <div class="detail-label">Specialty</div>
+                    <div class="detail-value">${professional.specialty || 'N/A'}</div>
+                </div>
+                <div class="detail-group">
+                    <div class="detail-label">Years of Experience</div>
+                    <div class="detail-value">${professional.yearsExperience || 0} years</div>
+                </div>
+                <div class="detail-group">
+                    <div class="detail-label">Additional Certifications</div>
+                    <div class="detail-value">${professional.certifications || 'None provided'}</div>
+                </div>
+                <div class="detail-group">
+                    <div class="detail-label">Current Job Title</div>
+                    <div class="detail-value">${professional.currentJob || 'N/A'}</div>
+                </div>
+                <div class="detail-group">
+                    <div class="detail-label">Current Employer</div>
+                    <div class="detail-value">${professional.currentEmployer || 'N/A'}</div>
+                </div>
+                <div class="detail-group">
+                    <div class="detail-label">Role Description</div>
+                    <div class="detail-value">${professional.role || 'N/A'}</div>
+                </div>
+                <div class="detail-group">
+                    <div class="detail-label">State of Work</div>
+                    <div class="detail-value">${professional.workState || 'N/A'}</div>
+                </div>
+                <div class="detail-group">
+                    <div class="detail-label">Status</div>
+                    <div class="detail-value"><span class="badge ${
+                        professional.status === 'approved' ? 'badge-approved' :
+                        professional.status === 'rejected' ? 'badge-rejected' :
+                        'badge-pending'
+                    }">${professional.status || 'pending'}</span></div>
+                </div>
+                <div class="detail-group">
+                    <div class="detail-label">Submitted At</div>
+                    <div class="detail-value">${submittedDate}</div>
+                </div>
+            `;
+
+            document.getElementById('detailModal').classList.add('show');
+        };
+
+        // Update status
+        window.updateStatus = async function(id, newStatus) {
+            if (!confirm(`Are you sure you want to ${newStatus} this application?`)) {
+                return;
+            }
+
+            try {
+                const docRef = doc(db, 'medicalProfessionals', id);
+                await updateDoc(docRef, {
+                    status: newStatus
+                });
+
+                // Update local data
+                const professional = allData.find(p => p.id === id);
+                if (professional) {
+                    professional.status = newStatus;
+                }
+
+                updateStats();
+                renderTable();
+                alert(`Application ${newStatus} successfully!`);
+            } catch (error) {
+                console.error('Error updating status:', error);
+                alert('Error updating status. Please try again.');
+            }
+        };
+
+        // Close modal
+        window.closeModal = function() {
+            document.getElementById('detailModal').classList.remove('show');
+        };
+
+        // Refresh data
+        window.refreshData = function() {
+            document.getElementById('loadingState').style.display = 'block';
+            document.getElementById('tableContent').style.display = 'none';
+            loadData();
+        };
+
+        // Export to CSV
+        window.exportData = function() {
+            if (allData.length === 0) {
+                alert('No data to export');
+                return;
+            }
+
+            const headers = ['Full Name', 'Email', 'Phone', 'University', 'License', 'Specialty', 
+                           'Years Experience', 'Certifications', 'Current Job', 'Current Employer', 
+                           'Role', 'State', 'Status', 'Submitted At'];
+            
+            const csvData = allData.map(p => [
+                p.fullName || '',
+                p.email || '',
+                p.phone || '',
+                p.university || '',
+                p.license || '',
+                p.specialty || '',
+                p.yearsExperience || '',
+                p.certifications || '',
+                p.currentJob || '',
+                p.currentEmployer || '',
+                p.role || '',
+                p.workState || '',
+                p.status || '',
+                p.submittedAt ? new Date(p.submittedAt.toDate()).toLocaleString() : ''
+            ]);
+
+            const csv = [headers, ...csvData]
+                .map(row => row.map(cell => `"${cell}"`).join(','))
+                .join('\n');
+
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `medical-professionals-${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        };
+
+        // Event listeners
+        document.getElementById('searchInput').addEventListener('input', applyFilters);
+        document.getElementById('statusFilter').addEventListener('change', applyFilters);
+        document.getElementById('specialtyFilter').addEventListener('change', applyFilters);
+        document.getElementById('stateFilter').addEventListener('change', applyFilters);
+
+        // Close modal when clicking outside
+        document.getElementById('detailModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Initial load
+        loadData();
+    </script>
+</body>
+</html>

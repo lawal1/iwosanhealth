@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iwosan.Health - World-Class Healthcare in Nigeria</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 5%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #b70303;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #b70303;
+        }
+
+        .cta-btn {
+            background: #b70303;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .cta-btn:hover {
+            background: #940202;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(183, 3, 3, 0.3);
+        }
+        
+        /* NEW CSS for Mobile Menu Toggle Button (Hidden on Desktop) */
+        .menu-toggle {
+            display: none; /* Hidden by default on desktop */
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #333;
+            z-index: 1001;
+            padding: 0.5rem;
+            line-height: 1; /* Fix vertical alignment of the icon */
+        }
+
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            padding-top: 100px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 5%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text {
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: #1a1a1a;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        .hero-image {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: white;
+            padding: 3rem 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 2.5rem;
+            color: #b70303;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        /* Sub-Hero */
+        .sub-hero {
+            background: #f8f9fa;
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .sub-hero h2 {
+            font-size: 2.5rem;
+            color: #1a1a1a;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .sub-hero p {
+            font-size: 1.1rem;
+            color: #555;
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            background: white;
+            padding: 5rem 0;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step {
+            text-align: left;
+            padding: 2.5rem;
+            border-radius: 16px;
+            background: #f8f9fa;
+            border: 1px solid #e5e7eb;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border-color: #b70303;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: #b70303;
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .step h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+
+        .step p {
+            color: #666;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        /* Why Section */
+        .why-section {
+            background: white;
+            color: #333;
+            padding: 5rem 0;
+        }
+
+        .why-section .section-title {
+            color: #1a1a1a;
+        }
+        
+        .why-section .section-subtitle {
+            color: #666;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .benefit {
+            background: #f8f9fa;
+            padding: 2.5rem;
+            border-radius: 16px;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s;
+        }
+
+        .benefit:hover {
+            background: white;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(183, 3, 3, 0.1);
+            border-color: #b70303;
+        }
+
+        .benefit h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: #b70303;
+            font-weight: 600;
+        }
+
+        .benefit p {
+            color: #666;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        /* Services */
+        .services {
+            background: #f8f9fa;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(183, 3, 3, 0.15);
+        }
+
+        .service-card h3 {
+            color: #b70303;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .service-card p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Trust Section */
+        .trust {
+            background: white;
+            text-align: center;
+        }
+
+        .trust-content {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.15rem;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+            color: white;
+            text-align: center;
+            padding: 6rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: #b70303;
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background: #940202;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(183, 3, 3, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: 1rem 2.5rem;
+            border: 2px solid white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #1a1a1a;
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        footer p {
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            
+            .nav-container {
+                /* Ensure toggle button and CTA button are aligned nicely on mobile */
+                justify-content: space-between;
+                gap: 1rem;
+            }
+
+            /* Show the toggle button on mobile */
+            .menu-toggle {
+                display: block; 
+                order: 2; /* Position the toggle next to the CTA */
+            }
+
+            /* Push CTA button to the right */
+            .cta-btn {
+                order: 3;
+                margin-left: auto;
+            }
+
+            /* Style and position the navigation links for mobile */
+            .nav-links {
+                /* Start hidden and slide down */
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%; /* Position below the nav bar */
+                left: 0;
+                width: 100%;
+                background: white;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                padding: 1rem 5%;
+                border-top: 1px solid #eee;
+                transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+                
+                transform: translateY(-100%); 
+                opacity: 0;
+                pointer-events: none; /* Prevents interaction when hidden */
+                
+                /* Occupy all horizontal space */
+                gap: 0; 
+            }
+
+            /* State when the menu is active/open */
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                pointer-events: all;
+            }
+
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+                margin: 0.5rem 0;
+                border-bottom: 1px solid #f8f8f8;
+                padding: 0.5rem 0;
+            }
+            
+            .nav-links li:last-child {
+                border-bottom: none;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 0.5rem 0;
+                font-size: 1.1rem;
+                color: #1a1a1a;
+            }
+            
+            .hero-content {
+                grid-template-columns: 1fr;
+                padding-top: 2rem;
+            }
+
+            .hero-image {
+                order: -1;
+                margin-bottom: 2rem;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+
+            .steps-grid,
+            .benefits-grid,
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Iwosan.Health</div>
+            <ul class="nav-links" id="mobile-menu">
+                <li><a href="#services">Services</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#why-us">Why Us</a></li>
+                <li><a href="Drform.html">Medical Professionals</a></li>
+            </ul>
+            <!-- New mobile menu toggle button -->
+            <button class="menu-toggle" id="menu-toggle">☰</button>
+            <a href="patient.html" class="cta-btn">Get Started</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Get Your Procedure Done in Weeks</h1>
+                <p>You don't have to wait six months. Get your procedure done quickly with the best medical professionals in Nigeria and save up to <strong>70%</strong> on medical costs. Trusted. Affordable. Seamless. Premium healthcare shouldn't come with a long wait or a high cost.</p>
+                <a href="patient.html" class="btn-primary">Start Your Medical Journey</a>
+            </div>
+            <div class="hero-image">
+                <img src="Gemini_Generated_Image_vglxiwvglxiwvglx.png" alt="Medical Professional">
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>2,000+</h3>
+                    <p>Vetted Medical Professionals</p>
+                </div>
+                <div class="stat-item">
+                    <h3>70%</h3>
+                    <p>Average Cost Savings</p>
+                </div>
+                <div class="stat-item">
+                    <h3>2-4 Weeks</h3>
+                    <p>Average Wait Time</p>
+                </div>
+                <div class="stat-item">
+                    <h3>100%</h3>
+                    <p>Concierge Support</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="sub-hero">
+        <div class="container">
+            <h2>Exceptional Care, Closer to Home</h2>
+            <p>Iwosan.Health connects to a network of over <strong>500+ vetted medical professionals</strong> across Nigeria. We deliver premium-quality, timely treatment with full end-to-end support—so you can focus on healing, not the hassles.</p>
+        </div>
+    </section>
+
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <h2 class="section-title">Healthcare, Simplified. From Consultation to Complete Recovery.</h2>
+            <div class="steps-grid">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Book Your Consultation</h3>
+                    <p>Start with a free, no-obligation consultation to discuss your needs and medical history.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Match With Top Nigerian Specialists</h3>
+                    <p>All doctors and hospitals on Iwosan.Health are verified, accredited, and quality-assured for peace of mind.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Get Transparent Pricing</h3>
+                    <p>Receive a clear, upfront quote for your procedure. Know exactly what you will pay.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Enjoy Full Service Support</h3>
+                    <p>We coordinate your travel, accommodation, hospital logistics, immigration, and after-care—all the details are handled.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="why-section" id="why-us">
+        <div class="container">
+            <h2 class="section-title">Premium healthcare shouldn't come with a long wait or a high cost.</h2>
+            <p class="section-subtitle">Why choose Iwosan.Health</p>
+            <div class="benefits-grid">
+                <div class="benefit">
+                    <h3>Save up to 70%</h3>
+                    <p>Access globally recognized medical expertise in Nigeria at a fraction of the cost you'd pay in the US, UK, or Canada.</p>
+                </div>
+                <div class="benefit">
+                    <h3>Swift Access, No Waiting</h3>
+                    <p>Avoid months-long waiting lists. We ensure quick scheduling so you can get the care you need, when you need it.</p>
+                </div>
+                <div class="benefit">
+                    <h3>2,000+ Vetted Professionals</h3>
+                    <p>You gain exclusive access to a network of top surgeons, fertility experts, cardiologists, and specialists across Nigeria.</p>
+                </div>
+                <div class="benefit">
+                    <h3>End-to-End Concierge Support</h3>
+                    <p>From airport pickup to hospital check-ins, we handle every logistical detail for a stress-free experience.</p>
+                </div>
+                <div class="benefit">
+                    <h3>Diaspora-Focused Service</h3>
+                    <p>Our service is specifically designed for Africans abroad seeking quality care without the financial and logistical burden.</p>
+                </div>
+                <div class="benefit">
+                    <h3>Global Quality Standards</h3>
+                    <p>All our partner facilities and medical providers meet strict international healthcare accreditation requirements.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">Top procedures that save you thousands</h2>
+            <p class="section-subtitle">Featured Medical Services</p>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>IVF & Fertility Care</h3>
+                    <p>Access high-success rate fertility treatments</p>
+                </div>
+                <div class="service-card">
+                    <h3>Orthopedic Surgeries</h3>
+                    <p>Specialized treatments including Hip/Knee replacements</p>
+                </div>
+                <div class="service-card">
+                    <h3>Cosmetic & Plastic Surgery</h3>
+                    <p>Advanced, quality-assured aesthetic procedures</p>
+                </div>
+                <div class="service-card">
+                    <h3>Dental Implants & Cosmetic Dentistry</h3>
+                    <p>Complete smile transformations with top dentists</p>
+                </div>
+                <div class="service-card">
+                    <h3>General Surgeries</h3>
+                    <p>Routine and complex procedures like Hernia and Appendectomy</p>
+                </div>
+                <div class="service-card">
+                    <h3>Cardiology Diagnostics & Treatment</h3>
+                    <p>Comprehensive care from heart health specialists</p>
+                </div>
+                <div class="service-card">
+                    <h3>Ophthalmology</h3>
+                    <p>World-class vision correction and treatment (Cataract, LASIK)</p>
+                </div>
+                <div class="service-card">
+                    <h3>More Specialists</h3>
+                    <p>Expanding network with new specialists added weekly</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="trust">
+        <div class="container">
+            <h2 class="section-title">Your safety and comfort is our unwavering priority</h2>
+            <div class="trust-content">
+                <p>We rigorously pre-screen and verify every doctor and hospital using global health quality benchmarks. Our dedicated team helps you navigate immigration, security, and travel logistics—guaranteeing your experience is smooth, secure, and stress-free.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section" id="consultation">
+        <div class="container">
+            <h2>Ready to start your medical journey?</h2>
+            <p>Book a free consultation today to get a cost comparison and a personalized medical itinerary.</p>
+            <div class="cta-buttons">
+                <a href="patient.html" class="btn-primary">Book a Free Consultation</a>
+                <a href="#services" class="btn-secondary">Explore All Medical Procedures</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p><strong>Iwosan.Health</strong> — Bringing global healthcare access home. Affordable. Trusted. Seamless.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to navigation
+        let lastScroll = 0;
+        const nav = document.querySelector('nav');
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                nav.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+            } else {
+                nav.style.boxShadow = '0 2px 10px rgba(0,0,0,0.05)';
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe sections for animation
+        document.querySelectorAll('.step, .benefit, .service-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // --- NEW Mobile Menu Toggle Functionality ---
+        const menuToggle = document.getElementById('menu-toggle');
+        const navLinks = document.getElementById('mobile-menu');
+        
+        menuToggle.addEventListener('click', () => {
+            // Toggle the 'active' class on the menu
+            navLinks.classList.toggle('active');
+            
+            // Change button icon based on state (Hamburger to Close 'X')
+            menuToggle.textContent = navLinks.classList.contains('active') ? '✕' : '☰'; 
+        });
+
+        // Close menu when a link is clicked (important for single-page smooth scrolling)
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                // Check if the menu is open before closing
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    menuToggle.textContent = '☰';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
