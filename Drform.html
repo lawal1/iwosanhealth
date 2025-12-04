@@ -208,6 +208,10 @@
             margin-top: 0.25rem;
         }
 
+        .hidden {
+            display: none;
+        }
+
         @media (max-width: 768px) {
             body {
                 padding: 1rem;
@@ -250,7 +254,6 @@
     <div class="form-container">
         <div class="form-header">
             <div class="logo">Iwosan.Health</div>
-            <!-- <h1>Medical Professional Registration</h1> -->
             <p>Fill the form registration below :</p>
         </div>
 
@@ -263,11 +266,9 @@
             <div class="benefits-title">What You Stand to Gain</div>
             <div class="benefits-grid">
                 <div class="benefit-item">
-                    
                     <p><strong>Global Exposure</strong>Showcase to international patients</p>
                 </div>
                 <div class="benefit-item">
-                    
                     <p><strong>Competitive Remuneration</strong>Compensation that reflects your value</p>
                 </div>
                 <div class="benefit-item">
@@ -341,6 +342,11 @@
                         <option value="radiology">Radiology</option>
                         <option value="other">Other</option>
                     </select>
+                </div>
+
+                <div class="form-group hidden" id="otherSpecialtyGroup">
+                    <label for="otherSpecialty">Please specify your specialty <span class="required">*</span></label>
+                    <input type="text" id="otherSpecialty" name="otherSpecialty" placeholder="Enter your specialty">
                 </div>
 
                 <div class="form-group">
@@ -448,6 +454,21 @@
         const form = document.getElementById('registrationForm');
         const successMessage = document.getElementById('successMessage');
         const submitBtn = form.querySelector('.submit-btn');
+        const specialtySelect = document.getElementById('specialty');
+        const otherSpecialtyGroup = document.getElementById('otherSpecialtyGroup');
+        const otherSpecialtyInput = document.getElementById('otherSpecialty');
+
+        // Show/hide "Other" specialty input based on selection
+        specialtySelect.addEventListener('change', function() {
+            if (this.value === 'other') {
+                otherSpecialtyGroup.classList.remove('hidden');
+                otherSpecialtyInput.required = true;
+            } else {
+                otherSpecialtyGroup.classList.add('hidden');
+                otherSpecialtyInput.required = false;
+                otherSpecialtyInput.value = '';
+            }
+        });
 
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -460,6 +481,12 @@
                 // Get form data
                 const formData = new FormData(form);
                 const data = Object.fromEntries(formData);
+                
+                // If "Other" is selected, use the custom specialty text
+                if (data.specialty === 'other' && data.otherSpecialty) {
+                    data.specialty = data.otherSpecialty;
+                    delete data.otherSpecialty;
+                }
                 
                 // Add timestamp
                 const registrationData = {
@@ -481,6 +508,8 @@
                 
                 // Reset form
                 form.reset();
+                otherSpecialtyGroup.classList.add('hidden');
+                otherSpecialtyInput.required = false;
                 
                 // Reset all input borders
                 const inputs = document.querySelectorAll('input, select, textarea');
