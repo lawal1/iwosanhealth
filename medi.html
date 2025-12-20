@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nigerian Medical Breakthroughs 2024-2025 | Lafi.Health News</title>
+    <meta name="description" content="Discover 10 amazing Nigerian healthcare achievements, medical innovations, and medical breakthroughs from 2024-2025. Latest news on Nigerian medical professionals and healthcare advancements.">
+    <meta name="keywords" content="Nigerian medical news 2024, Nigerian healthcare advancements, Nigerian doctors achievements, medical breakthroughs Nigeria, Africa healthcare innovations, Nigerian medical research, Lagos University Teaching Hospital, Nigerian cardiology, Nigerian IVF success, medical tourism Nigeria">
+    <meta name="author" content="Lafi.Health Medical News">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+        }
+
+        /* Navigation - Same as main site */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 5%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #b70303;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #b70303;
+        }
+
+        .cta-btn {
+            background: #b70303;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .cta-btn:hover {
+            background: #940202;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(183, 3, 3, 0.3);
+        }
+
+        /* Main Content */
+        .page-header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+            color: white;
+            padding: 120px 5% 60px;
+            text-align: center;
+            margin-top: 70px;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+
+        /* Articles Grid */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin: 3rem 0 5rem;
+        }
+
+        .article-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(183, 3, 3, 0.15);
+        }
+
+        .article-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .article-content {
+            padding: 1.8rem;
+        }
+
+        .article-category {
+            display: inline-block;
+            background: #f0f0f0;
+            color: #b70303;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .article-title {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .article-excerpt {
+            color: #555;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .read-more {
+            color: #b70303;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.3s;
+        }
+
+        .read-more:hover {
+            gap: 0.8rem;
+        }
+
+        /* Featured Article */
+        .featured-article {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .featured-article .article-image {
+            height: 100%;
+            min-height: 350px;
+            border-radius: 12px;
+        }
+
+        .featured-article .article-content {
+            padding: 2rem 0;
+        }
+
+        .featured-article .article-title {
+            font-size: 2rem;
+        }
+
+        /* Sidebar */
+        .news-sidebar {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            margin-top: 3rem;
+        }
+
+        .sidebar-title {
+            font-size: 1.5rem;
+            color: #1a1a1a;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #b70303;
+        }
+
+        .trending-list {
+            list-style: none;
+        }
+
+        .trending-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .trending-item:last-child {
+            border-bottom: none;
+        }
+
+        .trending-link {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .trending-link:hover {
+            color: #b70303;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background: linear-gradient(135deg, #b70303 0%, #940202 100%);
+            color: white;
+            padding: 3rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .newsletter h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 2rem auto 0;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 0.9rem 1.2rem;
+            border: none;
+            border-radius: 8px 0 0 8px;
+            font-size: 1rem;
+        }
+
+        .newsletter-button {
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: 0 8px 8px 0;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .newsletter-button:hover {
+            background: #333;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .featured-article {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .featured-article .article-image {
+                min-height: 250px;
+            }
+            
+            .featured-article .article-title {
+                font-size: 1.6rem;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-input, .newsletter-button {
+                width: 100%;
+                border-radius: 8px;
+                margin-bottom: 0.5rem;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">Lafi.Health</a>
+            <ul class="nav-links">
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#how-it-works">How It Works</a></li>
+                <li><a href="index.html#why-us">Why Us</a></li>
+                <li><a href="medical-professionals.html">Medical News</a></li>
+                <li><a href="Drform.html">Join Our Network</a></li>
+            </ul>
+            <a href="patient.html" class="cta-btn">Get Started</a>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="container">
+            <h1>Nigerian Medical Breakthroughs 2024-2025</h1>
+            <p>Discover the latest achievements, innovations, and success stories from Nigeria's healthcare sector. Stay updated with groundbreaking developments from Nigerian medical professionals.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="articles-grid">
+            <!-- Featured Article -->
+            <article class="article-card featured-article">
+                <img src="https://images.unsplash.com/photo-1586773860418-dc22f8b874bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Nigerian medical research team" class="article-image">
+                <div class="article-content">
+                    <span class="article-category">RESEARCH BREAKTHROUGH</span>
+                    <h2 class="article-title">Nigerian Scientists Develop Africa's First AI-Powered Diagnostic Tool for Early Cancer Detection</h2>
+                    <div class="article-meta">
+                        <span>March 15, 2025</span>
+                        <span>Lagos University Teaching Hospital</span>
+                    </div>
+                    <p class="article-excerpt">A team of Nigerian researchers at Lagos University Teaching Hospital has developed "MedScreen AI", Africa's first artificial intelligence diagnostic tool that detects early-stage cancers with 96% accuracy. The innovation, funded by Nigerian investors, reduces diagnostic costs by 70% and wait times from weeks to hours. This breakthrough positions Nigeria as a leader in medical AI technology in Africa.</p>
+                    <a href="#" class="read-more">Read Full Article →</a>
+                </div>
+            </article>
+
+            <!-- Article 2 -->
+            <article class="article-card">
+                <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Cardiology department Nigeria" class="article-image">
+                <div class="article-content">
+                    <span class="article-category">CARDIOLOGY</span>
+                    <h2 class="article-title">Abuja Hospital Performs Nigeria's First Fully Robotic Heart Surgery</h2>
+                    <div class="article-meta">
+                        <span>February 28, 2025</span>
+                        <span>National Hospital Abuja</span>
+                    </div>
+                    <p class="article-excerpt">The National Hospital Abuja has successfully completed Nigeria's first fully robotic heart surgery, marking a milestone in Nigerian cardiology. The 5-hour procedure was led by Dr. Amina Okoye, reducing patient recovery time by 60% compared to traditional methods. This advancement makes complex cardiac surgeries more accessible across West Africa.</p>
+                    <a href="#" class="read-more">Read More →</a>
+                </div>
+            </article>
+
+            <!-- Article 3 -->
+            <article class="article-card">
+                <img src="https://images.unsplash.com/photo-1551601651-2a8555f1a136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="IVF success Nigeria" class="article-image">
+                <div class="article-content">
+                    <span class="article-category">FERTILITY ADVANCEMENT</span>
+                    <h2 class="article-title">IVF Success Rates in Nigeria Surpass European Averages in 2024</h2>
+                    <div class="article-meta">
+                        <span>January 22, 2025</span>
+                        <span>African Fertility Society</span>
+                    </div>
+                    <p class="article-excerpt">Nigerian fertility clinics reported a 68% success rate for IVF procedures in 2024, surpassing the European average of 62%. The African Fertility Society attributes this success to tailored protocols for African patients and advanced laboratory techniques developed locally. Nigeria now attracts fertility medical tourism from across the continent.</p>
+                    <a href="#" class="read-more">Read More →</a>
+                </div>
+            </article>
+
+            <!-- Article 4 -->
+            <article class="article-card">
+                <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Medical training Nigeria" class="article-image">
+                <div class="article-content">
+                    <span class="article-category">MEDICAL EDUCATION</span>
+                    <h2 class="article-title">Nigeria Produces Record Number of US-Licensed Physicians in 2024</h2>
+                    <div class="article-meta">
+                        <span>December 10, 2024</span>
+                        <span>Medical & Dental Council</span>
+                    </div>
+                    <p class="article-excerpt">A record 428 Nigerian medical graduates passed the United States Medical Licensing Examination (USMLE) in 2024, the highest number from any African country. This achievement reflects improved medical education standards and specialized USMLE preparation programs established in Nigerian teaching hospitals over the past three years.</p>
+                    <a href="#" class="read-more">Read More →</a>
+                </div>
+            </article>
+
+            <!-- Article 5 -->
+            <article class="article-card">
+                <img src="https://images.unsplash.com/photo-1584467735871-8db9ac8d0916?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Telemedicine Nigeria" class="article-image">
+                <div class="article-content">
+                    <span class="article-category">DIGITAL HEALTH</span>
+                    <h2 class="article-title">Telemedicine Adoption in Nigeria Grows by 300% Post-Healthcare Reform</h2>
+                    <div class="article-meta">
+                        <span>November 5, 2024</span>
+                        <span>Federal Ministry of Health</span>
+                    </div>
+                    <p class="article-excerpt">Following Nigeria's 2023 National Digital Health Initiative, telemedicine consultations have increased by 300%, reaching over 2 million rural patients. Nigerian-developed platforms like "MedConnect NG" now offer specialist consultations, prescription services, and remote monitoring, bridging urban-rural healthcare gaps across the country.</p>
+                    <a href="#" class="read-more">Read More →</a>
+                </div>
+            </article>
+
+            <!-- Article 6 -->
+            <article class="article-card">
+                <img src="https://images.unsplash.com/photo-1554734867-bf3c00a49371?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Medical manufacturing Nigeria" class="article-image">
+                <div class="article-content">
+                    <span class="article-category">MEDICAL MANUFACTURING</span>
+                    <h2 class="article-title">Lagos-Based Startup Begins Production of Africa's First Dialysis Machines</h2>
+                    <div class="article-meta">
+                        <span>October 18, 2024</span>
+                        <span>HealthTech Nigeria</span>
+                    </div>
+                    <p class="article-excerpt">MedEquip Africa, a Lagos-based medical device manufacturer, has begun production of Nigeria's first locally manufactured dialysis machines. Priced 40% lower than imported units, these machines will increase dialysis access for Nigeria's 50,000 annual kidney failure patients. The factory creates 200 specialized engineering jobs.</p>
+                    <a href="#" class="read-more">Read More →</a>
+                </div>
+            </article>
+
+            <!-- Article 7 -->
+            <article class="article-card">
+                <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Medical research Nigeria" class="article-image">
+                <div class="article-content">
+                    <span class="article-category">RESEARCH & DEVELOPMENT</span>
+                    <h2 class="article-title">Nigerian Pharmaceutical Company Develops New Malaria Drug with 95% Efficacy</h2>
+                    <div class="article-meta">
+                        <span>September 12, 2024</span>
+                        <span>University of Ibadan</span>
+                    </div>
+                    <p class="article-excerpt">In collaboration with University of Ibadan researchers, Nigerian pharmaceutical company PharmaTrust has developed "MalariStop", a new antimalarial drug with 95% efficacy in clinical trials. The drug, derived from indigenous plant compounds, shows promise against drug-resistant malaria strains and will be available across Africa by Q2 2025.</p>
+                    <a href="#" class="read-more">Read More →</a>
+                </div>
+            </article>
+
+            <!-- Article 8 -->
+            <article class="article-card">
+                <img src="https://images.unsplash.com/photo-1586773860418-dc22f8b874bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Medical conference Nigeria" class="article-image">
+                <div class="article-content">
+                    <span class="article-category">INTERNATIONAL RECOGNITION</span>
+                    <h2 class="article-title">Nigerian Neurosurgeon Wins Prestigious International Medical Award</h2>
+                    <div class="article-meta">
+                        <span>August 30, 2024</span>
+                        <span>World Medical Association</span>
+                    </div>
+                    <p class="article-excerpt">Dr. Chidi Nwankwo, a neurosurgeon at University of Nigeria Teaching Hospital, has received the World Medical Association's Excellence in Surgical Innovation Award for his pioneering work in minimally invasive brain surgery techniques. His methods have reduced surgical complications by 45% and are being adopted globally.</p>
+                    <a href="#" class="read-more">Read More →</a>
+                </div>
+            </article>
+
+            <!-- Article 9 -->
+            <article class="article-card">
+                <img src="https://images.unsplash.com/photo-1578496781980-7a5e6d57ab5a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Medical infrastructure Nigeria" class="article-image">
+                <div class="article-content">
+                    <span class="article-category">HEALTHCARE INFRASTRUCTURE</span>
+                    <h2 class="article-title">Nigeria Opens West Africa's Largest Specialist Cancer Treatment Center</h2>
+                    <div class="article-meta">
+                        <span>July 15, 2024</span>
+                        <span>Lagos Cancer Institute</span>
+                    </div>
+                    <p class="article-excerpt">The Lagos Cancer Institute, West Africa's largest comprehensive cancer center, has officially opened with state-of-the-art radiotherapy, chemotherapy, and surgical oncology units. The ₦45 billion facility will treat over 10,000 patients annually and reduce medical tourism for cancer treatment by an estimated 60%.</p>
+                    <a href="#" class="read-more">Read More →</a>
+                </div>
+            </article>
+
+            <!-- Article 10 -->
+            <article class="article-card">
+                <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Medical collaboration Nigeria" class="article-image">
+                <div class="article-content">
+                    <span class="article-category">GLOBAL COLLABORATION</span>
+                    <h2 class="article-title">UK-Nigeria Medical Partnership Trains 500 Nigerian Specialists in Advanced Techniques</h2>
+                    <div class="article-meta">
+                        <span>June 8, 2024</span>
+                        <span>Royal College of Surgeons</span>
+                    </div>
+                    <p class="article-excerpt">A landmark partnership between the Royal College of Surgeons and Nigerian teaching hospitals has completed training for 500 Nigerian medical specialists in advanced surgical techniques. The 2-year program focused on minimally invasive surgery, improving patient outcomes and positioning Nigeria as a regional hub for specialized medical training.</p>
+                    <a href="#" class="read-more">Read More →</a>
+                </div>
+            </article>
+        </div>
+
+        <aside class="news-sidebar">
+            <h3 class="sidebar-title">Trending Medical News</h3>
+            <ul class="trending-list">
+                <li class="trending-item"><a href="#" class="trending-link">Nigerian Hospitals Adopt Blockchain for Medical Records</a></li>
+                <li class="trending-item"><a href="#" class="trending-link">Port Harcourt Hospital Performs First In-Utero Surgery</a></li>
+                <li class="trending-item"><a href="#" class="trending-link">Nigeria's Medical Tourism Revenue Hits $1.2B in 2024</a></li>
+                <li class="trending-item"><a href="#" class="trending-link">Young Nigerian Doctor Invents Low-Cost Ventilator</a></li>
+                <li class="trending-item"><a href="#" class="trending-link">Mental Health Awareness Campaign Reaches 5 Million Nigerians</a></li>
+            </ul>
+        </aside>
+
+        <section class="newsletter">
+            <h3>Stay Updated with Nigerian Medical News</h3>
+            <p>Subscribe to our monthly newsletter for the latest breakthroughs, research, and achievements from Nigeria's healthcare sector.</p>
+            <form class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
+                <button type="submit" class="newsletter-button">Subscribe</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p><strong>Lafi.Health Medical News</strong> — Bringing you the latest achievements from Nigeria's healthcare sector.</p>
+            <p>Stay informed about medical breakthroughs, innovations, and success stories from Nigerian medical professionals.</p>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="index.html#services">Our Services</a>
+                <a href="Drform.html">For Medical Professionals</a>
+                <a href="patient.html">Patient Portal</a>
+                <a href="#">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Newsletter form submission
+        const newsletterForm = document.querySelector('.newsletter-form');
+        if (newsletterForm) {
+            newsletterForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = this.querySelector('.newsletter-input').value;
+                
+                // In a real implementation, you would send this to a server
+                // For now, just show an alert
+                alert(`Thank you for subscribing with ${email}! You'll receive our next newsletter soon.`);
+                this.reset();
+            });
+        }
+
+        // Add animation to article cards on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe article cards for animation
+        document.querySelectorAll('.article-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
