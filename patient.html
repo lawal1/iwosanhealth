@@ -164,6 +164,61 @@
             animation: slideIn 0.3s ease-out;
         }
 
+        .success-message strong {
+            display: block;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: #25D366;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            margin-top: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+        }
+
+        .whatsapp-btn:hover {
+            background: #128C7E;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        .whatsapp-btn:active {
+            transform: translateY(0);
+        }
+
+        .whatsapp-btn img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .form-section {
+            transition: opacity 0.3s ease, max-height 0.3s ease;
+            max-height: 1000px;
+            overflow: hidden;
+            opacity: 1;
+        }
+
+        .form-section.hidden {
+            max-height: 0;
+            opacity: 0;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
         @keyframes slideIn {
             from {
                 opacity: 0;
@@ -173,12 +228,6 @@
                 opacity: 1;
                 transform: translateY(0);
             }
-        }
-
-        .success-message strong {
-            display: block;
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
         }
 
         @media (max-width: 768px) {
@@ -210,33 +259,46 @@
         <div id="successMessage" class="success-message">
             <strong>✓ Message Received!</strong>
             <p>Thank you for contacting us. We'll get back to you within 48 hours.</p>
+            
+            <div style="margin-top: 1.5rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
+                <p style="color: #333; margin-bottom: 0.5rem;"><strong>For quick session booking:</strong></p>
+                <a href="https://wa.me/2349029288279" target="_blank" class="whatsapp-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white">
+                        <path d="M12.032 0c-6.627 0-12 5.372-12 12 0 2.126.553 4.118 1.521 5.848L0 24l6.238-1.605c1.705.937 3.635 1.466 5.794 1.466 6.627 0 12-5.372 12-12 0-6.628-5.373-12-12-12zm6.349 17.199c-.193.545-.958.997-1.571 1.129-.418.09-.964.16-2.802-.602-2.351-.977-3.865-3.363-3.983-3.518-.117-.155-.99-1.325-.99-2.528s.599-1.828.814-2.084c.215-.256.466-.32.622-.32.155 0 .311 0 .449.006.155.006.34-.074.533.548.193.622.653 2.153.71 2.307.058.155.097.335.023.518-.074.183-.117.292-.233.46-.117.166-.243.366-.349.489-.117.135-.236.28-.101.551.135.272.604 1.162 1.297 1.883.893.938 1.643 1.241 1.921 1.372.272.135.432.117.594-.068.162-.183.696-.81.88-1.088.183-.277.366-.232.62-.138.256.094 1.604.757 1.88.896.277.135.459.202.525.315.068.113.068.65-.125 1.196z"/>
+                    </svg>
+                    Book Quick Session on WhatsApp
+                </a>
+                <p style="font-size: 0.9rem; color: #666; margin-top: 0.75rem;">Click above to start a WhatsApp conversation for immediate assistance</p>
+            </div>
         </div>
 
-        <form id="contactForm">
-            <div class="form-group">
-                <label for="name">Full Name <span class="required">*</span></label>
-                <input type="text" id="name" name="name" required>
-            </div>
+        <div id="formSection" class="form-section">
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="name">Full Name <span class="required">*</span></label>
+                    <input type="text" id="name" name="name" required>
+                </div>
 
-            <div class="form-group">
-                <label for="phone">Phone Number <span class="required">*</span></label>
-                <input type="tel" id="phone" name="phone" required>
-                <div class="help-text">Include country code (e.g., +234)</div>
-            </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number <span class="required">*</span></label>
+                    <input type="tel" id="phone" name="phone" required>
+                    <div class="help-text">Include country code (e.g., +234)</div>
+                </div>
 
-            <div class="form-group">
-                <label for="email">Email Address <span class="required">*</span></label>
-                <input type="email" id="email" name="email" required>
-            </div>
+                <div class="form-group">
+                    <label for="email">Email Address <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" required>
+                </div>
 
-            <div class="form-group">
-                <label for="description">How can we help you? <span class="required">*</span></label>
-                <textarea id="description" name="description" placeholder="Please provide a brief description of your healthcare needs or inquiry..." required></textarea>
-                <div class="help-text">Tell us about your medical concern, preferred specialty, or any specific requirements</div>
-            </div>
+                <div class="form-group">
+                    <label for="description">How can we help you? <span class="required">*</span></label>
+                    <textarea id="description" name="description" placeholder="Please provide a brief description of your healthcare needs or inquiry..." required></textarea>
+                    <div class="help-text">Tell us about your medical concern, preferred specialty, or any specific requirements</div>
+                </div>
 
-            <button type="submit" class="submit-btn">Submit Request</button>
-        </form>
+                <button type="submit" class="submit-btn">Submit Request</button>
+            </form>
+        </div>
     </div>
 
     <!-- Firebase SDK -->
@@ -260,6 +322,7 @@
 
         const form = document.getElementById('contactForm');
         const successMessage = document.getElementById('successMessage');
+        const formSection = document.getElementById('formSection');
         const submitBtn = form.querySelector('.submit-btn');
 
         form.addEventListener('submit', async function(e) {
@@ -283,18 +346,32 @@
                 
                 console.log('Contact request submitted with ID:', docRef.id);
                 
-                successMessage.classList.add('show');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                // Hide the form section
+                formSection.classList.add('hidden');
+                
+                // Show success message with WhatsApp button
+                setTimeout(() => {
+                    successMessage.classList.add('show');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 300);
+                
+                // Reset form but keep it hidden
                 form.reset();
                 
+                // Reset input borders
                 const inputs = document.querySelectorAll('input, textarea');
                 inputs.forEach(input => {
                     input.style.borderColor = '#e5e7eb';
                 });
                 
+                // Auto-hide success message after 10 seconds (optional)
                 setTimeout(() => {
                     successMessage.classList.remove('show');
-                }, 7000);
+                    // Optionally show form again after hiding success message
+                    setTimeout(() => {
+                        formSection.classList.remove('hidden');
+                    }, 3000000);
+                }, 10000);
                 
             } catch (error) {
                 console.error('Error submitting contact request:', error);
