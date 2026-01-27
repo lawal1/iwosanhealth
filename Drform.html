@@ -221,17 +221,12 @@
                 padding: 2rem 1.5rem;
             }
 
-            .form-header h1 {
-                font-size: 1.5rem;
-            }
-
             .benefits-grid {
                 grid-template-columns: 1fr;
             }
 
-            .radio-group {
-                flex-direction: column;
-                gap: 1rem;
+            .form-header h1 {
+                font-size: 1.5rem;
             }
         }
 
@@ -239,14 +234,33 @@
             display: none;
             background: #d4edda;
             color: #155724;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
             border: 1px solid #c3e6cb;
+            text-align: center;
+            animation: slideDown 0.3s ease-out;
         }
 
         .success-message.show {
             display: block;
+        }
+
+        .success-message strong {
+            display: block;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
@@ -254,63 +268,75 @@
     <div class="form-container">
         <div class="form-header">
             <div class="logo">Lafi.Health</div>
-            <p>Fill the form registration below :</p>
+            <h1>Medical Professional Registration</h1>
+            <p>Join our network of healthcare providers</p>
+            
+            <div class="benefits-section">
+                <div class="benefits-title">✨ Why Join Lafi?</div>
+                <div class="benefits-grid">
+                    <div class="benefit-item">
+                        <strong>💼 Flexible Work</strong>
+                        <p>Work on your own schedule</p>
+                    </div>
+                    <div class="benefit-item">
+                        <strong>🌍 Remote Sessions</strong>
+                        <p>Provide care from anywhere</p>
+                    </div>
+                    <div class="benefit-item">
+                        <strong>💰 Fair Compensation</strong>
+                        <p>Competitive rates for services</p>
+                    </div>
+                    <div class="benefit-item">
+                        <strong>🚀 Growing Network</strong>
+                        <p>Join a community of professionals</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div id="successMessage" class="success-message">
-            <strong>Success!</strong> Your registration has been submitted successfully. We'll be in touch soon.
-        </div>
-
-        <!-- What You Stand to Gain Section -->
-        <div class="benefits-section">
-            <div class="benefits-title">What You Stand to Gain</div>
-            <div class="benefits-grid">
-                <div class="benefit-item">
-                    <p><strong>Global Exposure</strong>Showcase to international patients</p>
-                </div>
-                <div class="benefit-item">
-                    <p><strong>Competitive Remuneration</strong>Compensation that reflects your value</p>
-                </div>
-                <div class="benefit-item">
-                    <strong>International Collaborations</strong>
-                    <p>Partner with professionals worldwide</p>
-                </div>
-                <div class="benefit-item">
-                    <strong>Professional Growth</strong>
-                    <p>Skill enhancement & career advancement</p>
-                </div>
-            </div>
+            <strong>✓ Registration Successful!</strong>
+            <p>Thank you for registering. We'll review your application and get back to you within 48 hours.</p>
         </div>
 
         <form id="registrationForm">
             <!-- Personal Information -->
-            <div class="form-group">
-                <label for="fullName">Full Name <span class="required">*</span></label>
-                <input type="text" id="fullName" name="fullName" required>
-            </div>
-
-            <div class="form-group">
-                <label for="email">Email Address <span class="required">*</span></label>
-                <input type="email" id="email" name="email" required>
-            </div>
-
-            <div class="form-group">
-                <label for="phone">Phone Number <span class="required">*</span></label>
-                <input type="tel" id="phone" name="phone" required>
-                <div class="help-text">Include country code (e.g., +234)</div>
-            </div>
-
-            <!-- Education & Licensing -->
-            <div class="form-section">
-                <div class="section-title">Education & Licensing</div>
+            <div class="form-section" style="margin-top: 0; padding-top: 0; border-top: none;">
+                <div class="section-title">Personal Information</div>
 
                 <div class="form-group">
-                    <label for="university">University (Year of Graduation) <span class="required">*</span></label>
-                    <input type="text" id="university" name="university" placeholder="e.g., University of Lagos (2015)" required>
+                    <label for="fullName">Full Name <span class="required">*</span></label>
+                    <input type="text" id="fullName" name="fullName" required>
                 </div>
 
                 <div class="form-group">
-                    <label>Do you have a current practicing licence? <span class="required">*</span></label>
+                    <label for="email">Email Address <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number <span class="required">*</span></label>
+                    <input type="tel" id="phone" name="phone" required>
+                    <div class="help-text">Include country code (e.g., +234)</div>
+                </div>
+            </div>
+
+            <!-- Education & Credentials -->
+            <div class="form-section">
+                <div class="section-title">Education & Credentials</div>
+
+                <div class="form-group">
+                    <label for="university">Medical School/University <span class="required">*</span></label>
+                    <input type="text" id="university" name="university" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="graduationYear">Year of Graduation <span class="required">*</span></label>
+                    <input type="number" id="graduationYear" name="graduationYear" min="1950" max="2030" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Do you have a current medical license? <span class="required">*</span></label>
                     <div class="radio-group">
                         <div class="radio-option">
                             <input type="radio" id="licenseYes" name="license" value="yes" required>
@@ -322,22 +348,32 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Specialization -->
+            <div class="form-section">
+                <div class="section-title">Specialization</div>
 
                 <div class="form-group">
-                    <label for="specialty">Specialty <span class="required">*</span></label>
+                    <label for="specialty">Medical Specialty <span class="required">*</span></label>
                     <select id="specialty" name="specialty" required>
                         <option value="">Select your specialty</option>
+                        <option value="general-practice">General Practice/Family Medicine</option>
+                        <option value="anesthesiology">Anesthesiology</option>
                         <option value="cardiology">Cardiology</option>
-                        <option value="Dentistry">Dentistry</option>
                         <option value="dermatology">Dermatology</option>
-                        <option value="fertility">Fertility & IVF</option>
+                        <option value="emergency-medicine">Emergency Medicine</option>
+                        <option value="endocrinology">Endocrinology</option>
+                        <option value="gastroenterology">Gastroenterology</option>
                         <option value="general-surgery">General Surgery</option>
-                        <option value="gynecology">Gynecology</option>
-                        <option value="general practitioner">general practitioner</option>
                         <option value="internal-medicine">Internal Medicine</option>
                         <option value="neurology">Neurology</option>
+                        <option value="obstetrics-gynecology">Obstetrics & Gynecology</option>
+                        <option value="oncology">Oncology</option>
                         <option value="ophthalmology">Ophthalmology</option>
                         <option value="orthopedics">Orthopedics</option>
+                        <option value="otolaryngology">Otolaryngology (ENT)</option>
+                        <option value="pathology">Pathology</option>
                         <option value="pediatrics">Pediatrics</option>
                         <option value="plastic-surgery">Plastic & Cosmetic Surgery</option>
                         <option value="psychiatry">Psychiatry</option>
@@ -435,23 +471,23 @@
     <script type="module">
         // Import Firebase SDK
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-        import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        import { getDatabase, ref, push, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
         // Your Firebase configuration
         const firebaseConfig = {
-            apiKey: "AIzaSyA3fMQiCZWFpPZJ1JrObgdygtvAC23Hfwo",
-            authDomain: "timirg-copilot.firebaseapp.com",
-            databaseURL: "https://timirg-copilot-default-rtdb.firebaseio.com",
-            projectId: "timirg-copilot",
-            storageBucket: "timirg-copilot.appspot.com",
-            messagingSenderId: "491904583147",
-            appId: "1:491904583147:web:7ad8a54b7341b1abbf05ae",
-            measurementId: "G-GNZKB9SKDE"
+            apiKey: "AIzaSyAhlC-1LJYn4De0fL3iJhwtDWRzDpCwXaY",
+            authDomain: "vouchcard-46e48.firebaseapp.com",
+            databaseURL: "https://vouchcard-46e48-default-rtdb.firebaseio.com",
+            projectId: "vouchcard-46e48",
+            storageBucket: "vouchcard-46e48.firebasestorage.app",
+            messagingSenderId: "951045666666",
+            appId: "1:951045666666:web:35a4808d943ae311565713",
+            measurementId: "G-0PDX1RFQ02"
         };
 
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+        const database = getDatabase(app);
 
         const form = document.getElementById('registrationForm');
         const successMessage = document.getElementById('successMessage');
@@ -490,17 +526,18 @@
                     delete data.otherSpecialty;
                 }
                 
-                // Add timestamp
+                // Add timestamp and status
                 const registrationData = {
                     ...data,
                     submittedAt: serverTimestamp(),
                     status: 'pending'
                 };
                 
-                // Save to Firebase Firestore
-                const docRef = await addDoc(collection(db, 'medicalProfessionals'), registrationData);
+                // Save to Firebase Realtime Database
+                const medicalProfessionalsRef = ref(database, 'medicalProfessionals');
+                const newProfessionalRef = await push(medicalProfessionalsRef, registrationData);
                 
-                console.log('Document written with ID:', docRef.id);
+                console.log('Document written with ID:', newProfessionalRef.key);
                 
                 // Show success message
                 successMessage.classList.add('show');

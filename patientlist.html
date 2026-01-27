@@ -214,30 +214,34 @@
             padding: 1rem;
             border-radius: 8px;
             border-left: 3px solid #b70303;
-            margin-top: 0.5rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
 
         .timestamp {
-            font-size: 0.85rem;
-            color: #999;
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid #e5e7eb;
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid #f0f0f0;
         }
 
         .action-buttons {
             display: flex;
             gap: 1rem;
-            margin-top: 1.5rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid #f0f0f0;
         }
 
         .btn {
-            padding: 0.6rem 1.5rem;
+            padding: 0.75rem 1.5rem;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            font-size: 0.95rem;
         }
 
         .btn-primary {
@@ -247,38 +251,17 @@
 
         .btn-primary:hover {
             background: #940202;
-        }
-
-        .btn-secondary {
-            background: #6c757d;
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background: #5a6268;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 4rem 2rem;
-            color: #666;
-        }
-
-        .empty-state svg {
-            width: 100px;
-            height: 100px;
-            margin-bottom: 1rem;
-            opacity: 0.3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(183, 3, 3, 0.3);
         }
 
         .search-box {
-            margin-bottom: 2rem;
-            position: relative;
+            margin-bottom: 1.5rem;
         }
 
         .search-box input {
             width: 100%;
-            padding: 1rem 1rem 1rem 3rem;
+            padding: 1rem;
             border: 2px solid #e5e7eb;
             border-radius: 8px;
             font-size: 1rem;
@@ -291,11 +274,21 @@
             box-shadow: 0 0 0 3px rgba(183, 3, 3, 0.1);
         }
 
-        .search-icon {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #999;
+        }
+
+        .empty-state svg {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+
+        .empty-state h3 {
+            font-size: 1.2rem;
             color: #666;
         }
 
@@ -305,22 +298,15 @@
             }
 
             .tabs {
-                flex-direction: column;
-                gap: 0;
+                overflow-x: auto;
             }
 
             .tab {
-                padding: 0.75rem 1rem;
-                text-align: left;
+                white-space: nowrap;
             }
 
             .info-row {
                 grid-template-columns: 1fr;
-                gap: 0.25rem;
-            }
-
-            .info-label {
-                font-size: 0.85rem;
             }
 
             .action-buttons {
@@ -332,71 +318,137 @@
 <body>
     <div class="container">
         <div class="header">
-            <div class="logo">Lafi.Africa</div>
+            <div class="logo">Lafi.Health</div>
             <h1>Admin Dashboard</h1>
         </div>
 
-        <div id="loadingMessage" class="loading">Loading data...</div>
+        <div id="loadingMessage" class="loading">
+            🔄 Loading data...
+        </div>
+
         <div id="errorMessage" class="error" style="display: none;"></div>
 
         <div id="dashboardContent" style="display: none;">
-            <div class="stats">
-                <div class="stat-card">
-                    <h3>Patient Contacts</h3>
-                    <div class="number" id="totalPatients">0</div>
-                </div>
-                <div class="stat-card">
-                    <h3>Pending Actions</h3>
-                    <div class="number" id="pendingActions">0</div>
-                </div>
-                <div class="stat-card">
-                    <h3>Contacted</h3>
-                    <div class="number" id="contactedPatients">0</div>
-                </div>
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('patientsTab')">Patient Contacts</button>
+                <button class="tab" onclick="switchTab('professionalsTab')">Medical Professionals</button>
             </div>
 
-            <div id="patients" class="tab-content active">
-                <div class="search-box">
-                    <span class="search-icon">🔍</span>
-                    <input type="text" id="searchPatients" placeholder="Search by name or email...">
+            <div id="patientsTab" class="tab-content active">
+                <div class="stats">
+                    <div class="stat-card">
+                        <h3>Total Patient Contacts</h3>
+                        <div class="number" id="totalPatients">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Pending Actions</h3>
+                        <div class="number" id="pendingActions">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Contacted</h3>
+                        <div class="number" id="contactedPatients">0</div>
+                    </div>
                 </div>
-                <div id="patientsContainer" class="cards-container"></div>
+
+                <div class="search-box">
+                    <input type="text" id="searchPatients" placeholder="🔍 Search patients by name, email, or description...">
+                </div>
+
+                <div class="cards-container" id="patientsContainer"></div>
+            </div>
+
+            <div id="professionalsTab" class="tab-content">
+                <div class="stats">
+                    <div class="stat-card">
+                        <h3>Total Professionals</h3>
+                        <div class="number" id="totalProfessionals">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Pending Reviews</h3>
+                        <div class="number" id="pendingProfessionals">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Contacted</h3>
+                        <div class="number" id="contactedProfessionals">0</div>
+                    </div>
+                </div>
+
+                <div class="search-box">
+                    <input type="text" id="searchProfessionals" placeholder="🔍 Search professionals by name, email, or specialty...">
+                </div>
+
+                <div class="cards-container" id="professionalsContainer"></div>
             </div>
         </div>
     </div>
 
+    <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-        import { getFirestore, collection, getDocs, query, orderBy, doc, updateDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        import { getDatabase, ref, onValue, update, query, orderByChild } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
         const firebaseConfig = {
-            apiKey: "AIzaSyA3fMQiCZWFpPZJ1JrObgdygtvAC23Hfwo",
-            authDomain: "timirg-copilot.firebaseapp.com",
-            databaseURL: "https://timirg-copilot-default-rtdb.firebaseio.com",
-            projectId: "timirg-copilot",
-            storageBucket: "timirg-copilot.appspot.com",
-            messagingSenderId: "491904583147",
-            appId: "1:491904583147:web:7ad8a54b7341b1abbf05ae",
-            measurementId: "G-GNZKB9SKDE"
+            apiKey: "AIzaSyAhlC-1LJYn4De0fL3iJhwtDWRzDpCwXaY",
+            authDomain: "vouchcard-46e48.firebaseapp.com",
+            databaseURL: "https://vouchcard-46e48-default-rtdb.firebaseio.com",
+            projectId: "vouchcard-46e48",
+            storageBucket: "vouchcard-46e48.firebasestorage.app",
+            messagingSenderId: "951045666666",
+            appId: "1:951045666666:web:35a4808d943ae311565713",
+            measurementId: "G-0PDX1RFQ02"
         };
 
         const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+        const database = getDatabase(app);
 
+        let professionalsData = [];
         let patientsData = [];
 
         async function loadData() {
             try {
-                const patientsQuery = query(collection(db, 'patientContacts'), orderBy('submittedAt', 'desc'));
-                const patientsSnapshot = await getDocs(patientsQuery);
+                // Load medical professionals from Realtime Database
+                const professionalsRef = ref(database, 'medicalProfessionals');
+                onValue(professionalsRef, (snapshot) => {
+                    professionalsData = [];
+                    if (snapshot.exists()) {
+                        snapshot.forEach((childSnapshot) => {
+                            professionalsData.push({
+                                id: childSnapshot.key,
+                                ...childSnapshot.val()
+                            });
+                        });
+                    }
+                    
+                    // Update professionals stats
+                    document.getElementById('totalProfessionals').textContent = professionalsData.length;
+                    const pendingProfs = professionalsData.filter(p => p.status === 'pending').length;
+                    const contactedProfs = professionalsData.filter(p => p.status === 'contacted').length;
+                    document.getElementById('pendingProfessionals').textContent = pendingProfs;
+                    document.getElementById('contactedProfessionals').textContent = contactedProfs;
+                    
+                    displayProfessionals(professionalsData);
+                }, (error) => {
+                    console.error('Error loading professionals:', error);
+                });
 
-                patientsData = patientsSnapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                }));
-
-                updateStats();
-                displayPatients(patientsData);
+                // Load patient contacts from Realtime Database
+                const patientsRef = ref(database, 'patientContacts');
+                onValue(patientsRef, (snapshot) => {
+                    patientsData = [];
+                    if (snapshot.exists()) {
+                        snapshot.forEach((childSnapshot) => {
+                            patientsData.push({
+                                id: childSnapshot.key,
+                                ...childSnapshot.val()
+                            });
+                        });
+                    }
+                    
+                    updateStats();
+                    displayPatients(patientsData);
+                }, (error) => {
+                    console.error('Error loading patients:', error);
+                });
 
                 document.getElementById('loadingMessage').style.display = 'none';
                 document.getElementById('dashboardContent').style.display = 'block';
@@ -421,7 +473,8 @@
 
         function formatDate(timestamp) {
             if (!timestamp) return 'N/A';
-            const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+            // Handle Firebase Realtime Database server timestamp
+            const date = new Date(timestamp);
             return date.toLocaleString('en-US', {
                 year: 'numeric',
                 month: 'short',
@@ -571,15 +624,16 @@
             document.getElementById(tabName).classList.add('active');
         };
 
-        window.markAsContacted = async function(collectionName, docId) {
+        window.markAsContacted = async function(collectionName, recordId) {
             try {
-                await updateDoc(doc(db, collectionName, docId), {
+                const recordRef = ref(database, `${collectionName}/${recordId}`);
+                await update(recordRef, {
                     status: 'contacted',
-                    contactedAt: new Date()
+                    contactedAt: Date.now()
                 });
                 
                 alert('Status updated successfully!');
-                loadData();
+                // No need to reload - real-time listeners will update automatically
             } catch (error) {
                 console.error('Error updating status:', error);
                 alert('Error updating status: ' + error.message);
@@ -594,6 +648,16 @@
                 (patient.description || '').toLowerCase().includes(searchTerm)
             );
             displayPatients(filtered);
+        });
+
+        document.getElementById('searchProfessionals').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const filtered = professionalsData.filter(prof => 
+                (prof.fullName || '').toLowerCase().includes(searchTerm) ||
+                (prof.email || '').toLowerCase().includes(searchTerm) ||
+                (prof.specialty || '').toLowerCase().includes(searchTerm)
+            );
+            displayProfessionals(filtered);
         });
 
         loadData();

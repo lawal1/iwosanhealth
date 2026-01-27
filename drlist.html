@@ -242,11 +242,21 @@
         .actions-cell {
             display: flex;
             gap: 0.5rem;
+            flex-wrap: wrap;
         }
 
         .btn-small {
-            padding: 0.375rem 0.75rem;
+            padding: 0.35rem 0.75rem;
             font-size: 0.85rem;
+        }
+
+        .btn-view {
+            background: #0066cc;
+            color: white;
+        }
+
+        .btn-view:hover {
+            background: #0052a3;
         }
 
         .btn-approve {
@@ -265,21 +275,6 @@
 
         .btn-reject:hover {
             background: #c82333;
-        }
-
-        .btn-view {
-            background: #007bff;
-            color: white;
-        }
-
-        .btn-view:hover {
-            background: #0056b3;
-        }
-
-        .no-data {
-            text-align: center;
-            padding: 3rem;
-            color: #666;
         }
 
         .modal {
@@ -308,6 +303,7 @@
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
         }
 
         .modal-header {
@@ -319,7 +315,7 @@
         }
 
         .modal-title {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 600;
             color: #1a1a1a;
         }
@@ -351,23 +347,24 @@
         }
 
         .detail-label {
-            font-size: 0.85rem;
-            color: #666;
-            margin-bottom: 0.25rem;
             font-weight: 600;
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
         }
 
         .detail-value {
+            color: #1a1a1a;
             font-size: 1rem;
-            color: #333;
+            padding: 0.75rem;
+            background: #f8f9fa;
+            border-radius: 6px;
         }
 
-        .modal-footer {
-            padding: 1.5rem;
-            border-top: 1px solid #e5e7eb;
-            display: flex;
-            gap: 1rem;
-            justify-content: flex-end;
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #999;
         }
 
         @media (max-width: 768px) {
@@ -378,10 +375,6 @@
             .header-content {
                 flex-direction: column;
                 gap: 1rem;
-            }
-
-            .dashboard-stats {
-                grid-template-columns: 1fr;
             }
 
             .table-container {
@@ -397,10 +390,10 @@
 <body>
     <div class="header">
         <div class="header-content">
-            <div class="logo">Lafi.Africa Admin</div>
+            <div class="logo">Lafi.Health</div>
             <div class="header-actions">
-                <button class="btn btn-secondary" onclick="exportData()">Export CSV</button>
-                <button class="btn btn-primary" onclick="refreshData()">Refresh</button>
+                <button class="btn btn-secondary" onclick="refreshData()">🔄 Refresh</button>
+                <button class="btn btn-primary" onclick="exportData()">📥 Export CSV</button>
             </div>
         </div>
     </div>
@@ -409,7 +402,7 @@
         <div class="dashboard-stats">
             <div class="stat-card">
                 <div class="stat-value" id="totalCount">0</div>
-                <div class="stat-label">Total Registrations</div>
+                <div class="stat-label">Total Applications</div>
             </div>
             <div class="stat-card">
                 <div class="stat-value" id="pendingCount">0</div>
@@ -420,8 +413,8 @@
                 <div class="stat-label">Approved</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value" id="specialtyCount">0</div>
-                <div class="stat-label">Specialties</div>
+                <div class="stat-value" id="rejectedCount">0</div>
+                <div class="stat-label">Rejected</div>
             </div>
         </div>
 
@@ -434,7 +427,7 @@
                 <div class="filter-group">
                     <label>Status</label>
                     <select id="statusFilter">
-                        <option value="">All Statuses</option>
+                        <option value="">All Status</option>
                         <option value="pending">Pending</option>
                         <option value="approved">Approved</option>
                         <option value="rejected">Rejected</option>
@@ -444,12 +437,23 @@
                     <label>Specialty</label>
                     <select id="specialtyFilter">
                         <option value="">All Specialties</option>
+                        <option value="general-practice">General Practice</option>
+                        <option value="cardiology">Cardiology</option>
+                        <option value="dermatology">Dermatology</option>
+                        <option value="pediatrics">Pediatrics</option>
+                        <option value="psychiatry">Psychiatry</option>
+                        <option value="other">Other</option>
                     </select>
                 </div>
                 <div class="filter-group">
                     <label>State</label>
                     <select id="stateFilter">
                         <option value="">All States</option>
+                        <option value="lagos">Lagos</option>
+                        <option value="abuja">Abuja</option>
+                        <option value="oyo">Oyo</option>
+                        <option value="rivers">Rivers</option>
+                        <option value="kano">Kano</option>
                     </select>
                 </div>
             </div>
@@ -459,7 +463,7 @@
             <div class="table-header">
                 <div class="table-title">Medical Professionals</div>
             </div>
-            
+
             <div id="loadingState" class="loading">
                 <div class="spinner"></div>
                 <p>Loading data...</p>
@@ -469,7 +473,7 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Full Name</th>
+                            <th>Name</th>
                             <th>Email</th>
                             <th>Specialty</th>
                             <th>Experience</th>
@@ -479,28 +483,21 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="dataTableBody">
+                    <tbody id="tableBody">
                     </tbody>
                 </table>
-            </div>
-
-            <div id="noDataState" class="no-data" style="display: none;">
-                <p>No registrations found.</p>
             </div>
         </div>
     </div>
 
-    <!-- Modal for viewing details -->
+    <!-- Detail Modal -->
     <div id="detailModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="modal-title">Professional Details</div>
-                <button class="close-btn" onclick="closeModal()">&times;</button>
+                <button class="close-btn" onclick="closeModal()">×</button>
             </div>
             <div class="modal-body" id="modalBody">
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="closeModal()">Close</button>
             </div>
         </div>
     </div>
@@ -508,104 +505,100 @@
     <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-        import { getFirestore, collection, getDocs, doc, updateDoc, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        import { getDatabase, ref, onValue, update } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
-        // REPLACE WITH YOUR FIREBASE CONFIG
         const firebaseConfig = {
-               apiKey: "AIzaSyA3fMQiCZWFpPZJ1JrObgdygtvAC23Hfwo",
-  authDomain: "timirg-copilot.firebaseapp.com",
-  databaseURL: "https://timirg-copilot-default-rtdb.firebaseio.com",
-  projectId: "timirg-copilot",
-  storageBucket: "timirg-copilot.appspot.com",
-  messagingSenderId: "491904583147",
-  appId: "1:491904583147:web:7ad8a54b7341b1abbf05ae",
-  measurementId: "G-GNZKB9SKDE"
+            apiKey: "AIzaSyAhlC-1LJYn4De0fL3iJhwtDWRzDpCwXaY",
+            authDomain: "vouchcard-46e48.firebaseapp.com",
+            databaseURL: "https://vouchcard-46e48-default-rtdb.firebaseio.com",
+            projectId: "vouchcard-46e48",
+            storageBucket: "vouchcard-46e48.firebasestorage.app",
+            messagingSenderId: "951045666666",
+            appId: "1:951045666666:web:35a4808d943ae311565713",
+            measurementId: "G-0PDX1RFQ02"
         };
 
         const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+        const database = getDatabase(app);
 
         let allData = [];
         let filteredData = [];
 
-        // Load data from Firebase
+        // Load data from Firebase Realtime Database
         async function loadData() {
             try {
-                const q = query(collection(db, 'medicalProfessionals'), orderBy('submittedAt', 'desc'));
-                const querySnapshot = await getDocs(q);
+                const professionalsRef = ref(database, 'medicalProfessionals');
                 
-                allData = [];
-                querySnapshot.forEach((doc) => {
-                    allData.push({
-                        id: doc.id,
-                        ...doc.data()
+                onValue(professionalsRef, (snapshot) => {
+                    allData = [];
+                    
+                    if (snapshot.exists()) {
+                        snapshot.forEach((childSnapshot) => {
+                            allData.push({
+                                id: childSnapshot.key,
+                                ...childSnapshot.val()
+                            });
+                        });
+                    }
+
+                    // Sort by submitted date (newest first)
+                    allData.sort((a, b) => {
+                        const dateA = a.submittedAt || 0;
+                        const dateB = b.submittedAt || 0;
+                        return dateB - dateA;
                     });
+
+                    filteredData = [...allData];
+                    updateStats();
+                    renderTable();
+
+                    document.getElementById('loadingState').style.display = 'none';
+                    document.getElementById('tableContent').style.display = 'block';
+                }, (error) => {
+                    console.error('Error loading data:', error);
+                    document.getElementById('loadingState').innerHTML = 
+                        '<p style="color: #dc3545;">Error loading data. Please refresh the page.</p>';
                 });
 
-                filteredData = [...allData];
-                updateStats();
-                populateFilters();
-                renderTable();
-                
-                document.getElementById('loadingState').style.display = 'none';
-                document.getElementById('tableContent').style.display = allData.length > 0 ? 'block' : 'none';
-                document.getElementById('noDataState').style.display = allData.length === 0 ? 'block' : 'none';
             } catch (error) {
-                console.error('Error loading data:', error);
-                document.getElementById('loadingState').innerHTML = '<p>Error loading data. Please check your Firebase configuration.</p>';
+                console.error('Error initializing data load:', error);
+                document.getElementById('loadingState').innerHTML = 
+                    '<p style="color: #dc3545;">Error loading data. Please refresh the page.</p>';
             }
         }
 
         // Update statistics
         function updateStats() {
-            const totalCount = allData.length;
-            const pendingCount = allData.filter(d => d.status === 'pending').length;
-            const approvedCount = allData.filter(d => d.status === 'approved').length;
-            const specialties = new Set(allData.map(d => d.specialty)).size;
-
-            document.getElementById('totalCount').textContent = totalCount;
-            document.getElementById('pendingCount').textContent = pendingCount;
-            document.getElementById('approvedCount').textContent = approvedCount;
-            document.getElementById('specialtyCount').textContent = specialties;
-        }
-
-        // Populate filter dropdowns
-        function populateFilters() {
-            const specialties = [...new Set(allData.map(d => d.specialty))].sort();
-            const states = [...new Set(allData.map(d => d.workState))].sort();
-
-            const specialtyFilter = document.getElementById('specialtyFilter');
-            specialtyFilter.innerHTML = '<option value="">All Specialties</option>';
-            specialties.forEach(specialty => {
-                specialtyFilter.innerHTML += `<option value="${specialty}">${specialty}</option>`;
-            });
-
-            const stateFilter = document.getElementById('stateFilter');
-            stateFilter.innerHTML = '<option value="">All States</option>';
-            states.forEach(state => {
-                stateFilter.innerHTML += `<option value="${state}">${state}</option>`;
-            });
+            document.getElementById('totalCount').textContent = allData.length;
+            document.getElementById('pendingCount').textContent = 
+                allData.filter(p => p.status === 'pending' || !p.status).length;
+            document.getElementById('approvedCount').textContent = 
+                allData.filter(p => p.status === 'approved').length;
+            document.getElementById('rejectedCount').textContent = 
+                allData.filter(p => p.status === 'rejected').length;
         }
 
         // Render table
         function renderTable() {
-            const tbody = document.getElementById('dataTableBody');
+            const tbody = document.getElementById('tableBody');
             tbody.innerHTML = '';
 
             if (filteredData.length === 0) {
-                document.getElementById('tableContent').style.display = 'none';
-                document.getElementById('noDataState').style.display = 'block';
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" style="text-align: center; padding: 3rem;">
+                            <div class="empty-state">No professionals found</div>
+                        </td>
+                    </tr>
+                `;
                 return;
             }
-
-            document.getElementById('tableContent').style.display = 'block';
-            document.getElementById('noDataState').style.display = 'none';
 
             filteredData.forEach(professional => {
                 const row = document.createElement('tr');
                 
                 const submittedDate = professional.submittedAt ? 
-                    new Date(professional.submittedAt.toDate()).toLocaleDateString() : 
+                    new Date(professional.submittedAt).toLocaleDateString() : 
                     'N/A';
 
                 const statusBadgeClass = 
@@ -624,7 +617,7 @@
                     <td>
                         <div class="actions-cell">
                             <button class="btn btn-small btn-view" onclick="window.viewDetails('${professional.id}')">View</button>
-                            ${professional.status === 'pending' ? `
+                            ${professional.status === 'pending' || !professional.status ? `
                                 <button class="btn btn-small btn-approve" onclick="window.updateStatus('${professional.id}', 'approved')">Approve</button>
                                 <button class="btn btn-small btn-reject" onclick="window.updateStatus('${professional.id}', 'rejected')">Reject</button>
                             ` : ''}
@@ -647,7 +640,8 @@
                     professional.fullName?.toLowerCase().includes(searchTerm) ||
                     professional.email?.toLowerCase().includes(searchTerm);
                 
-                const matchesStatus = !statusFilter || professional.status === statusFilter;
+                const matchesStatus = !statusFilter || professional.status === statusFilter || 
+                    (statusFilter === 'pending' && !professional.status);
                 const matchesSpecialty = !specialtyFilter || professional.specialty === specialtyFilter;
                 const matchesState = !stateFilter || professional.workState === stateFilter;
 
@@ -663,7 +657,7 @@
             if (!professional) return;
 
             const submittedDate = professional.submittedAt ? 
-                new Date(professional.submittedAt.toDate()).toLocaleString() : 
+                new Date(professional.submittedAt).toLocaleString() : 
                 'N/A';
 
             const modalBody = document.getElementById('modalBody');
@@ -681,8 +675,12 @@
                     <div class="detail-value">${professional.phone || 'N/A'}</div>
                 </div>
                 <div class="detail-group">
-                    <div class="detail-label">University (Year of Graduation)</div>
+                    <div class="detail-label">University</div>
                     <div class="detail-value">${professional.university || 'N/A'}</div>
+                </div>
+                <div class="detail-group">
+                    <div class="detail-label">Graduation Year</div>
+                    <div class="detail-value">${professional.graduationYear || 'N/A'}</div>
                 </div>
                 <div class="detail-group">
                     <div class="detail-label">Current Practicing License</div>
@@ -740,20 +738,14 @@
             }
 
             try {
-                const docRef = doc(db, 'medicalProfessionals', id);
-                await updateDoc(docRef, {
-                    status: newStatus
+                const professionalRef = ref(database, `medicalProfessionals/${id}`);
+                await update(professionalRef, {
+                    status: newStatus,
+                    statusUpdatedAt: Date.now()
                 });
 
-                // Update local data
-                const professional = allData.find(p => p.id === id);
-                if (professional) {
-                    professional.status = newStatus;
-                }
-
-                updateStats();
-                renderTable();
                 alert(`Application ${newStatus} successfully!`);
+                // No need to manually update - real-time listener will handle it
             } catch (error) {
                 console.error('Error updating status:', error);
                 alert('Error updating status. Please try again.');
@@ -779,7 +771,7 @@
                 return;
             }
 
-            const headers = ['Full Name', 'Email', 'Phone', 'University', 'License', 'Specialty', 
+            const headers = ['Full Name', 'Email', 'Phone', 'University', 'Graduation Year', 'License', 'Specialty', 
                            'Years Experience', 'Certifications', 'Current Job', 'Current Employer', 
                            'Role', 'State', 'Status', 'Submitted At'];
             
@@ -788,6 +780,7 @@
                 p.email || '',
                 p.phone || '',
                 p.university || '',
+                p.graduationYear || '',
                 p.license || '',
                 p.specialty || '',
                 p.yearsExperience || '',
@@ -797,7 +790,7 @@
                 p.role || '',
                 p.workState || '',
                 p.status || '',
-                p.submittedAt ? new Date(p.submittedAt.toDate()).toLocaleString() : ''
+                p.submittedAt ? new Date(p.submittedAt).toLocaleString() : ''
             ]);
 
             const csv = [headers, ...csvData]

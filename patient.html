@@ -251,14 +251,12 @@
             <div class="logo">Lafi.Health</div>
             <h1>Get in Touch</h1>
             <p>Tell us about your healthcare needs</p>
-            <div class="response-time">
-                <strong>⏱️ We will contact you within 48 hours</strong>
-            </div>
+            
         </div>
 
         <div id="successMessage" class="success-message">
             <strong>✓ Message Received!</strong>
-            <p>Thank you for contacting us. We'll get back to you within 48 hours.</p>
+            <p>Thank you for contacting us. We'll get back to you shortly.</p>
             
             <div style="margin-top: 1.5rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
                 <p style="color: #333; margin-bottom: 0.5rem;"><strong>For quick session booking:</strong></p>
@@ -266,7 +264,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white">
                         <path d="M12.032 0c-6.627 0-12 5.372-12 12 0 2.126.553 4.118 1.521 5.848L0 24l6.238-1.605c1.705.937 3.635 1.466 5.794 1.466 6.627 0 12-5.372 12-12 0-6.628-5.373-12-12-12zm6.349 17.199c-.193.545-.958.997-1.571 1.129-.418.09-.964.16-2.802-.602-2.351-.977-3.865-3.363-3.983-3.518-.117-.155-.99-1.325-.99-2.528s.599-1.828.814-2.084c.215-.256.466-.32.622-.32.155 0 .311 0 .449.006.155.006.34-.074.533.548.193.622.653 2.153.71 2.307.058.155.097.335.023.518-.074.183-.117.292-.233.46-.117.166-.243.366-.349.489-.117.135-.236.28-.101.551.135.272.604 1.162 1.297 1.883.893.938 1.643 1.241 1.921 1.372.272.135.432.117.594-.068.162-.183.696-.81.88-1.088.183-.277.366-.232.62-.138.256.094 1.604.757 1.88.896.277.135.459.202.525.315.068.113.068.65-.125 1.196z"/>
                     </svg>
-                    Book Quick Session on WhatsApp
+                    Click to a Dr now on WhatsApp
                 </a>
                 <p style="font-size: 0.9rem; color: #666; margin-top: 0.75rem;">Click above to start a WhatsApp conversation for immediate assistance</p>
             </div>
@@ -304,21 +302,21 @@
     <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-        import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        import { getDatabase, ref, push, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
         const firebaseConfig = {
-            apiKey: "AIzaSyA3fMQiCZWFpPZJ1JrObgdygtvAC23Hfwo",
-            authDomain: "timirg-copilot.firebaseapp.com",
-            databaseURL: "https://timirg-copilot-default-rtdb.firebaseio.com",
-            projectId: "timirg-copilot",
-            storageBucket: "timirg-copilot.appspot.com",
-            messagingSenderId: "491904583147",
-            appId: "1:491904583147:web:7ad8a54b7341b1abbf05ae",
-            measurementId: "G-GNZKB9SKDE"
+            apiKey: "AIzaSyAhlC-1LJYn4De0fL3iJhwtDWRzDpCwXaY",
+            authDomain: "vouchcard-46e48.firebaseapp.com",
+            databaseURL: "https://vouchcard-46e48-default-rtdb.firebaseio.com",
+            projectId: "vouchcard-46e48",
+            storageBucket: "vouchcard-46e48.firebasestorage.app",
+            messagingSenderId: "951045666666",
+            appId: "1:951045666666:web:35a4808d943ae311565713",
+            measurementId: "G-0PDX1RFQ02"
         };
 
         const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+        const database = getDatabase(app);
 
         const form = document.getElementById('contactForm');
         const successMessage = document.getElementById('successMessage');
@@ -342,9 +340,11 @@
                     contactedWithin48Hours: false
                 };
                 
-                const docRef = await addDoc(collection(db, 'patientContacts'), contactData);
+                // Push data to Realtime Database
+                const patientContactsRef = ref(database, 'patientContacts');
+                const newContactRef = await push(patientContactsRef, contactData);
                 
-                console.log('Contact request submitted with ID:', docRef.id);
+                console.log('Contact request submitted with ID:', newContactRef.key);
                 
                 // Hide the form section
                 formSection.classList.add('hidden');
