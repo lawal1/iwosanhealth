@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Lafi.</title>
+    <title>Admin Dashboard - Lafi. (Secure)</title>
     <style>
         * {
             margin: 0;
@@ -16,16 +16,97 @@
             background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
             padding: 2rem;
             line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .container {
             max-width: 1400px;
+            width: 100%;
             margin: 0 auto;
+        }
+
+        /* Login Overlay / Card */
+        .login-container {
+            max-width: 400px;
+            margin: 2rem auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 2.5rem;
+            animation: fadeIn 0.3s;
+        }
+
+        .login-container .logo {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #444;
+            font-size: 0.9rem;
+        }
+
+        .form-group input {
+            padding: 0.9rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #b70303;
+            box-shadow: 0 0 0 3px rgba(183, 3, 3, 0.1);
+        }
+
+        .btn-login {
+            background: #b70303;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 0.5rem;
+        }
+
+        .btn-login:hover {
+            background: #940202;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(183, 3, 3, 0.3);
+        }
+
+        .login-error {
+            color: #b70303;
+            font-size: 0.9rem;
+            text-align: center;
+            min-height: 1.5rem;
         }
 
         .header {
             text-align: center;
             margin-bottom: 3rem;
+            position: relative;
         }
 
         .logo {
@@ -39,6 +120,28 @@
             font-size: 2rem;
             color: #1a1a1a;
             margin-bottom: 0.5rem;
+        }
+
+        .logout-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: #f0f0f0;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            font-weight: 600;
+            color: #444;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logout-btn:hover {
+            background: #e0e0e0;
+            color: #b70303;
         }
 
         .tabs {
@@ -312,81 +415,111 @@
             .action-buttons {
                 flex-direction: column;
             }
+
+            .logout-btn {
+                position: static;
+                margin-top: 1rem;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
+        <!-- Login Section (initially visible) -->
+        <div id="loginSection" class="login-container">
             <div class="logo">Lafi.Health</div>
-            <h1>Admin Dashboard</h1>
+            <h2 style="text-align:center; margin-bottom:1.5rem;">Admin Login</h2>
+            <div class="login-form">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="loginEmail" placeholder="admin@example.com" value="admin@lafi.health" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••" value="password123">
+                </div>
+                <div id="loginError" class="login-error"></div>
+                <button class="btn-login" id="loginBtn">Sign In</button>
+            </div>
         </div>
 
-        <div id="loadingMessage" class="loading">
-            🔄 Loading data...
-        </div>
-
-        <div id="errorMessage" class="error" style="display: none;"></div>
-
+        <!-- Dashboard Content (hidden until login) -->
         <div id="dashboardContent" style="display: none;">
-            <div class="tabs">
-                <button class="tab active" onclick="switchTab('patientsTab')">Patient Contacts</button>
-                <button class="tab" onclick="switchTab('professionalsTab')">Medical Professionals</button>
+            <div class="header">
+                <div class="logo">Lafi.Health</div>
+                <h1>Admin Dashboard</h1>
+                <button class="logout-btn" id="logoutBtn">🚪 Logout</button>
             </div>
 
-            <div id="patientsTab" class="tab-content active">
-                <div class="stats">
-                    <div class="stat-card">
-                        <h3>Total Patient Contacts</h3>
-                        <div class="number" id="totalPatients">0</div>
-                    </div>
-                    <div class="stat-card">
-                        <h3>Pending Actions</h3>
-                        <div class="number" id="pendingActions">0</div>
-                    </div>
-                    <div class="stat-card">
-                        <h3>Contacted</h3>
-                        <div class="number" id="contactedPatients">0</div>
-                    </div>
-                </div>
-
-                <div class="search-box">
-                    <input type="text" id="searchPatients" placeholder="🔍 Search patients by name, email, or description...">
-                </div>
-
-                <div class="cards-container" id="patientsContainer"></div>
+            <div id="loadingMessage" class="loading">
+                🔄 Loading data...
             </div>
 
-            <div id="professionalsTab" class="tab-content">
-                <div class="stats">
-                    <div class="stat-card">
-                        <h3>Total Professionals</h3>
-                        <div class="number" id="totalProfessionals">0</div>
-                    </div>
-                    <div class="stat-card">
-                        <h3>Pending Reviews</h3>
-                        <div class="number" id="pendingProfessionals">0</div>
-                    </div>
-                    <div class="stat-card">
-                        <h3>Contacted</h3>
-                        <div class="number" id="contactedProfessionals">0</div>
-                    </div>
+            <div id="errorMessage" class="error" style="display: none;"></div>
+
+            <div id="mainDashboard" style="display: none;">
+                <div class="tabs">
+                    <button class="tab active" onclick="switchTab('patientsTab')">Patient Contacts</button>
+                    <button class="tab" onclick="switchTab('professionalsTab')">Medical Professionals</button>
                 </div>
 
-                <div class="search-box">
-                    <input type="text" id="searchProfessionals" placeholder="🔍 Search professionals by name, email, or specialty...">
+                <div id="patientsTab" class="tab-content active">
+                    <div class="stats">
+                        <div class="stat-card">
+                            <h3>Total Patient Contacts</h3>
+                            <div class="number" id="totalPatients">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Pending Actions</h3>
+                            <div class="number" id="pendingActions">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Contacted</h3>
+                            <div class="number" id="contactedPatients">0</div>
+                        </div>
+                    </div>
+
+                    <div class="search-box">
+                        <input type="text" id="searchPatients" placeholder="🔍 Search patients by name, email, or description...">
+                    </div>
+
+                    <div class="cards-container" id="patientsContainer"></div>
                 </div>
 
-                <div class="cards-container" id="professionalsContainer"></div>
+                <div id="professionalsTab" class="tab-content">
+                    <div class="stats">
+                        <div class="stat-card">
+                            <h3>Total Professionals</h3>
+                            <div class="number" id="totalProfessionals">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Pending Reviews</h3>
+                            <div class="number" id="pendingProfessionals">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Contacted</h3>
+                            <div class="number" id="contactedProfessionals">0</div>
+                        </div>
+                    </div>
+
+                    <div class="search-box">
+                        <input type="text" id="searchProfessionals" placeholder="🔍 Search professionals by name, email, or specialty...">
+                    </div>
+
+                    <div class="cards-container" id="professionalsContainer"></div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Firebase SDK -->
+    <!-- Firebase SDK with Auth -->
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-        import { getDatabase, ref, onValue, update, query, orderByChild } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+        import { getDatabase, ref, onValue, update } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
 
+        // Firebase config
         const firebaseConfig = {
             apiKey: "AIzaSyAhlC-1LJYn4De0fL3iJhwtDWRzDpCwXaY",
             authDomain: "vouchcard-46e48.firebaseapp.com",
@@ -400,13 +533,84 @@
 
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
+        const auth = getAuth(app);
 
+        // DOM elements
+        const loginSection = document.getElementById('loginSection');
+        const dashboardContent = document.getElementById('dashboardContent');
+        const loadingMessage = document.getElementById('loadingMessage');
+        const mainDashboard = document.getElementById('mainDashboard');
+        const errorMessageDiv = document.getElementById('errorMessage');
+        const loginBtn = document.getElementById('loginBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const loginEmail = document.getElementById('loginEmail');
+        const loginPassword = document.getElementById('loginPassword');
+        const loginError = document.getElementById('loginError');
+
+        // Data holders
         let professionalsData = [];
         let patientsData = [];
 
+        // --- Authentication UI handler ---
+        function showAuthenticatedUI(user) {
+            if (user) {
+                loginSection.style.display = 'none';
+                dashboardContent.style.display = 'block';
+                // Load data (will show loading first)
+                loadData();
+            } else {
+                loginSection.style.display = 'block';
+                dashboardContent.style.display = 'none';
+                // Reset any displayed data
+                professionalsData = [];
+                patientsData = [];
+            }
+        }
+
+        // Listen to auth state
+        onAuthStateChanged(auth, (user) => {
+            showAuthenticatedUI(user);
+        });
+
+        // Login event
+        loginBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const email = loginEmail.value.trim();
+            const password = loginPassword.value.trim();
+            
+            if (!email || !password) {
+                loginError.textContent = 'Please enter email and password';
+                return;
+            }
+
+            loginError.textContent = '⏳ Signing in...';
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                loginError.textContent = ''; // clear on success
+            } catch (error) {
+                console.error('Login error:', error);
+                loginError.textContent = '❌ ' + error.message;
+            }
+        });
+
+        // Logout
+        logoutBtn.addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
+        });
+
+        // --- Data loading (only called when authenticated) ---
         async function loadData() {
             try {
-                // Load medical professionals from Realtime Database
+                // Show loading, hide main dashboard until data arrives
+                loadingMessage.style.display = 'block';
+                mainDashboard.style.display = 'none';
+                errorMessageDiv.style.display = 'none';
+
+                // Load medical professionals
                 const professionalsRef = ref(database, 'medicalProfessionals');
                 onValue(professionalsRef, (snapshot) => {
                     professionalsData = [];
@@ -419,19 +623,16 @@
                         });
                     }
                     
-                    // Update professionals stats
-                    document.getElementById('totalProfessionals').textContent = professionalsData.length;
-                    const pendingProfs = professionalsData.filter(p => p.status === 'pending').length;
-                    const contactedProfs = professionalsData.filter(p => p.status === 'contacted').length;
-                    document.getElementById('pendingProfessionals').textContent = pendingProfs;
-                    document.getElementById('contactedProfessionals').textContent = contactedProfs;
-                    
-                    displayProfessionals(professionalsData);
+                    // Update stats if main dashboard visible
+                    if (mainDashboard.style.display !== 'none') {
+                        updateProfessionalsStatsAndDisplay();
+                    }
                 }, (error) => {
                     console.error('Error loading professionals:', error);
+                    showError('Failed to load professionals: ' + error.message);
                 });
 
-                // Load patient contacts from Realtime Database
+                // Load patient contacts
                 const patientsRef = ref(database, 'patientContacts');
                 onValue(patientsRef, (snapshot) => {
                     patientsData = [];
@@ -444,36 +645,73 @@
                         });
                     }
                     
-                    updateStats();
-                    displayPatients(patientsData);
+                    if (mainDashboard.style.display !== 'none') {
+                        updatePatientsStatsAndDisplay();
+                    }
                 }, (error) => {
                     console.error('Error loading patients:', error);
+                    showError('Failed to load patients: ' + error.message);
                 });
 
-                document.getElementById('loadingMessage').style.display = 'none';
-                document.getElementById('dashboardContent').style.display = 'block';
+                // Hide loading, show main dashboard after first data? 
+                // We'll let the first onValue trigger hide loading via stats update.
+                // But to be safe, set a timeout to hide loading if data already arrived.
+                setTimeout(() => {
+                    loadingMessage.style.display = 'none';
+                    mainDashboard.style.display = 'block';
+                }, 1000);
 
             } catch (error) {
-                console.error('Error loading data:', error);
-                document.getElementById('loadingMessage').style.display = 'none';
-                document.getElementById('errorMessage').style.display = 'block';
-                document.getElementById('errorMessage').textContent = 'Error loading data: ' + error.message;
+                console.error('Fatal error:', error);
+                showError('Fatal error: ' + error.message);
+                loadingMessage.style.display = 'none';
             }
         }
 
-        function updateStats() {
+        function showError(msg) {
+            errorMessageDiv.style.display = 'block';
+            errorMessageDiv.textContent = msg;
+        }
+
+        function updatePatientsStatsAndDisplay() {
             document.getElementById('totalPatients').textContent = patientsData.length;
-            
             const pendingPatients = patientsData.filter(p => p.status === 'pending').length;
             const contactedPatients = patientsData.filter(p => p.status === 'contacted').length;
-            
             document.getElementById('pendingActions').textContent = pendingPatients;
             document.getElementById('contactedPatients').textContent = contactedPatients;
+            
+            // Apply current search filter before display
+            const searchTerm = document.getElementById('searchPatients').value.toLowerCase();
+            const filtered = patientsData.filter(patient => 
+                (patient.name || '').toLowerCase().includes(searchTerm) ||
+                (patient.email || '').toLowerCase().includes(searchTerm) ||
+                (patient.description || '').toLowerCase().includes(searchTerm)
+            );
+            displayPatients(filtered);
+
+            // Hide loading once we have data
+            loadingMessage.style.display = 'none';
+            mainDashboard.style.display = 'block';
+        }
+
+        function updateProfessionalsStatsAndDisplay() {
+            document.getElementById('totalProfessionals').textContent = professionalsData.length;
+            const pendingProfs = professionalsData.filter(p => p.status === 'pending').length;
+            const contactedProfs = professionalsData.filter(p => p.status === 'contacted').length;
+            document.getElementById('pendingProfessionals').textContent = pendingProfs;
+            document.getElementById('contactedProfessionals').textContent = contactedProfs;
+            
+            const searchTerm = document.getElementById('searchProfessionals').value.toLowerCase();
+            const filtered = professionalsData.filter(prof => 
+                (prof.fullName || '').toLowerCase().includes(searchTerm) ||
+                (prof.email || '').toLowerCase().includes(searchTerm) ||
+                (prof.specialty || '').toLowerCase().includes(searchTerm)
+            );
+            displayProfessionals(filtered);
         }
 
         function formatDate(timestamp) {
             if (!timestamp) return 'N/A';
-            // Handle Firebase Realtime Database server timestamp
             const date = new Date(timestamp);
             return date.toLocaleString('en-US', {
                 year: 'numeric',
@@ -486,7 +724,6 @@
 
         function displayProfessionals(data) {
             const container = document.getElementById('professionalsContainer');
-            
             if (data.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
@@ -506,61 +743,18 @@
                         <span class="status-badge status-${prof.status || 'pending'}">${prof.status || 'Pending'}</span>
                     </div>
                     <div class="card-body">
-                        <div class="info-row">
-                            <div class="info-label">Email:</div>
-                            <div class="info-value"><a href="mailto:${prof.email}">${prof.email || 'N/A'}</a></div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Phone:</div>
-                            <div class="info-value"><a href="tel:${prof.phone}">${prof.phone || 'N/A'}</a></div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Specialty:</div>
-                            <div class="info-value">${prof.specialty || 'N/A'}</div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Years Experience:</div>
-                            <div class="info-value">${prof.yearsExperience || 'N/A'} years</div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">University:</div>
-                            <div class="info-value">${prof.university || 'N/A'}</div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Current License:</div>
-                            <div class="info-value">${prof.license === 'yes' ? '✓ Yes' : '✗ No'}</div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Current Job:</div>
-                            <div class="info-value">${prof.currentJob || 'N/A'}</div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Employer:</div>
-                            <div class="info-value">${prof.currentEmployer || 'N/A'}</div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Location:</div>
-                            <div class="info-value">${prof.workState || 'N/A'}</div>
-                        </div>
-                        ${prof.role ? `
-                        <div class="info-row">
-                            <div class="info-label">Role Description:</div>
-                            <div class="info-value">
-                                <div class="description-box">${prof.role}</div>
-                            </div>
-                        </div>
-                        ` : ''}
-                        ${prof.certifications ? `
-                        <div class="info-row">
-                            <div class="info-label">Certifications:</div>
-                            <div class="info-value">
-                                <div class="description-box">${prof.certifications}</div>
-                            </div>
-                        </div>
-                        ` : ''}
-                        <div class="timestamp">
-                            📅 Submitted: ${formatDate(prof.submittedAt)}
-                        </div>
+                        <div class="info-row"><div class="info-label">Email:</div><div class="info-value"><a href="mailto:${prof.email}">${prof.email || 'N/A'}</a></div></div>
+                        <div class="info-row"><div class="info-label">Phone:</div><div class="info-value"><a href="tel:${prof.phone}">${prof.phone || 'N/A'}</a></div></div>
+                        <div class="info-row"><div class="info-label">Specialty:</div><div class="info-value">${prof.specialty || 'N/A'}</div></div>
+                        <div class="info-row"><div class="info-label">Years Experience:</div><div class="info-value">${prof.yearsExperience || 'N/A'} years</div></div>
+                        <div class="info-row"><div class="info-label">University:</div><div class="info-value">${prof.university || 'N/A'}</div></div>
+                        <div class="info-row"><div class="info-label">Current License:</div><div class="info-value">${prof.license === 'yes' ? '✓ Yes' : '✗ No'}</div></div>
+                        <div class="info-row"><div class="info-label">Current Job:</div><div class="info-value">${prof.currentJob || 'N/A'}</div></div>
+                        <div class="info-row"><div class="info-label">Employer:</div><div class="info-value">${prof.currentEmployer || 'N/A'}</div></div>
+                        <div class="info-row"><div class="info-label">Location:</div><div class="info-value">${prof.workState || 'N/A'}</div></div>
+                        ${prof.role ? `<div class="info-row"><div class="info-label">Role Description:</div><div class="info-value"><div class="description-box">${prof.role}</div></div></div>` : ''}
+                        ${prof.certifications ? `<div class="info-row"><div class="info-label">Certifications:</div><div class="info-value"><div class="description-box">${prof.certifications}</div></div></div>` : ''}
+                        <div class="timestamp">📅 Submitted: ${formatDate(prof.submittedAt)}</div>
                     </div>
                     <div class="action-buttons">
                         <button class="btn btn-primary" onclick="markAsContacted('medicalProfessionals', '${prof.id}')">Mark as Contacted</button>
@@ -571,7 +765,6 @@
 
         function displayPatients(data) {
             const container = document.getElementById('patientsContainer');
-            
             if (data.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
@@ -591,23 +784,10 @@
                         <span class="status-badge status-${patient.status || 'pending'}">${patient.status || 'Pending'}</span>
                     </div>
                     <div class="card-body">
-                        <div class="info-row">
-                            <div class="info-label">Email:</div>
-                            <div class="info-value"><a href="mailto:${patient.email}">${patient.email || 'N/A'}</a></div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Phone:</div>
-                            <div class="info-value"><a href="tel:${patient.phone}">${patient.phone || 'N/A'}</a></div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Description:</div>
-                            <div class="info-value">
-                                <div class="description-box">${patient.description || 'N/A'}</div>
-                            </div>
-                        </div>
-                        <div class="timestamp">
-                            📅 Submitted: ${formatDate(patient.submittedAt)}
-                        </div>
+                        <div class="info-row"><div class="info-label">Email:</div><div class="info-value"><a href="mailto:${patient.email}">${patient.email || 'N/A'}</a></div></div>
+                        <div class="info-row"><div class="info-label">Phone:</div><div class="info-value"><a href="tel:${patient.phone}">${patient.phone || 'N/A'}</a></div></div>
+                        <div class="info-row"><div class="info-label">Description:</div><div class="info-value"><div class="description-box">${patient.description || 'N/A'}</div></div></div>
+                        <div class="timestamp">📅 Submitted: ${formatDate(patient.submittedAt)}</div>
                     </div>
                     <div class="action-buttons">
                         <button class="btn btn-primary" onclick="markAsContacted('patientContacts', '${patient.id}')">Mark as Contacted</button>
@@ -616,31 +796,44 @@
             `).join('');
         }
 
+        // Tab switching (global function)
         window.switchTab = function(tabName) {
             document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
             
-            event.target.classList.add('active');
+            // Find the clicked tab button
+            const buttons = document.querySelectorAll('.tab');
+            buttons.forEach(btn => {
+                if (btn.textContent.includes(tabName === 'patientsTab' ? 'Patient' : 'Medical')) {
+                    btn.classList.add('active');
+                }
+            });
             document.getElementById(tabName).classList.add('active');
         };
 
+        // Mark as contacted (global for onclick)
         window.markAsContacted = async function(collectionName, recordId) {
+            // Ensure user is still authenticated (action will fail if not, but we check)
+            if (!auth.currentUser) {
+                alert('You must be logged in to perform this action.');
+                return;
+            }
             try {
                 const recordRef = ref(database, `${collectionName}/${recordId}`);
                 await update(recordRef, {
                     status: 'contacted',
                     contactedAt: Date.now()
                 });
-                
                 alert('Status updated successfully!');
-                // No need to reload - real-time listeners will update automatically
             } catch (error) {
                 console.error('Error updating status:', error);
                 alert('Error updating status: ' + error.message);
             }
         };
 
+        // Search event listeners
         document.getElementById('searchPatients').addEventListener('input', function(e) {
+            if (!auth.currentUser) return;
             const searchTerm = e.target.value.toLowerCase();
             const filtered = patientsData.filter(patient => 
                 (patient.name || '').toLowerCase().includes(searchTerm) ||
@@ -651,6 +844,7 @@
         });
 
         document.getElementById('searchProfessionals').addEventListener('input', function(e) {
+            if (!auth.currentUser) return;
             const searchTerm = e.target.value.toLowerCase();
             const filtered = professionalsData.filter(prof => 
                 (prof.fullName || '').toLowerCase().includes(searchTerm) ||
@@ -660,7 +854,9 @@
             displayProfessionals(filtered);
         });
 
-        loadData();
+        // Pre-fill demo credentials for convenience (can be removed)
+        // loginEmail.value = 'admin@lafi.health';
+        // loginPassword.value = 'password123';
     </script>
 </body>
 </html>
